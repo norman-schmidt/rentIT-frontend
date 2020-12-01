@@ -1,8 +1,9 @@
 import React from 'react'
 
 import Header from './components/Header'
+import Footer from './components/Footer'
 
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 
 const theme = createMuiTheme({
@@ -17,19 +18,21 @@ const theme = createMuiTheme({
   }
 })
 
-// const useStyles = makeStyles({
-//   root: {
-//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-//     maxWidth: 960
-//   }
-// })
+const useStyles = makeStyles({
+  root: {
+    alignItems: 'center',
+    textAlign: 'center'
+  }
+})
 
 function App () {
-  // const classes = useStyles()
+  const classes = useStyles()
+
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="md">
+      <Container maxWidth="md" className={classes.root}>
         <Header></Header>
+        <Footer></Footer>
       </Container>
     </ThemeProvider>
   )
