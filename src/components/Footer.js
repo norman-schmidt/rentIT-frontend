@@ -15,10 +15,11 @@ const useStyles = makeStyles((theme) => ({
     top: 'auto',
     bottom: 0,
     right: 'auto',
-    maxWidth: 'inherit',
+    maxWidth: theme.breakpoints.values.md,
     boxShadow: '0px 0px 10px -2px rgba(0,0,0,0.2)'
   },
   toolbar: {
+    padding: 0,
     width: 'inherit'
   },
   bottomNavigation: {
@@ -32,7 +33,7 @@ function Footer () {
   const [value, setValue] = React.useState(0)
 
   return (
-        <AppBar elevation={4} position="fixed" color="transparent" className={classes.appBar}>
+    <AppBar elevation={4} position="fixed" color="transparent" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
         <BottomNavigation
             value={value}
@@ -48,7 +49,7 @@ function Footer () {
             <BottomNavigationAction label="Dashboard/Settings" icon={<DashboardIcon />} />
         </BottomNavigation>
         </Toolbar>
-      </AppBar>
+    </AppBar>
   )
 }
 

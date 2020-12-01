@@ -20,8 +20,6 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles({
   root: {
-    alignItems: 'center',
-    textAlign: 'center'
   }
 })
 
@@ -30,7 +28,7 @@ function App () {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="md" className={classes.root}>
+      <Container disableGutters maxWidth="md" className={classes.root}>
         <Header></Header>
         <Footer></Footer>
       </Container>
