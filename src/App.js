@@ -1,10 +1,17 @@
+/* eslint-disable space-before-function-paren */
 import React from 'react'
 
+import Home from './components/Home'
+import Categories from './components/Categories'
+import ShoppingCart from './components/ShoppingCart'
+import Dashboard from './components/Dashboard'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
 import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 const theme = createMuiTheme({
   palette: {
@@ -23,16 +30,22 @@ const useStyles = makeStyles({
   }
 })
 
-function App () {
+function App() {
   const classes = useStyles()
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container disableGutters maxWidth="md" className={classes.root}>
-        <Header></Header>
-        <Footer></Footer>
-      </Container>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <Container disableGutters maxWidth="md" className={classes.root}>
+          <Header></Header>
+          <Route exact path="/" component={Home}></Route>
+          <Route path="/categories" component={Categories}></Route>
+          <Route path="/cart" component={ShoppingCart}></Route>
+          <Route path="/dashboard" component={Dashboard}></Route>
+          <Footer></Footer>
+        </Container>
+      </ThemeProvider>
+    </Router>
   )
 }
 

@@ -10,6 +10,8 @@ import ListIcon from '@material-ui/icons/List'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 
+import { useHistory, useLocation } from 'react-router-dom'
+
 const useStyles = makeStyles((theme) => ({
   appBar: {
     top: 'auto',
@@ -30,25 +32,56 @@ const useStyles = makeStyles((theme) => ({
 
 function Footer () {
   const classes = useStyles()
-  const [value, setValue] = React.useState(0)
+  const history = useHistory()
+  const path = useLocation().pathname
+
+  let end = path.indexOf('/', 1)
+  if (end === -1) end = path.length
+  const [value, setValue] = React.useState(path.substring(1, end))
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
+
+  const handleClick = (to) => {
+    history.push(to)
+  }
 
   return (
     <AppBar elevation={4} position="fixed" color="transparent" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
+      <Toolbar className={classes.toolbar}>
         <BottomNavigation
             value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue)
-            }}
-            showLabels
+            onChange={handleChange}
+            // showLabels
             className={classes.bottomNavigation}
         >
-            <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-            <BottomNavigationAction label="Categories" icon={<ListIcon />} />
-            <BottomNavigationAction label="Cart" icon={<ShoppingCartIcon />} />
-            <BottomNavigationAction label="Dashboard/Settings" icon={<DashboardIcon />} />
+            <BottomNavigationAction
+              label="Home"
+              value="home"
+              icon={<HomeIcon />}
+              onClick={() => handleClick('/')}
+            />
+            <BottomNavigationAction
+              label="Categories"
+              value="categories"
+              icon={<ListIcon />}
+              onClick={() => handleClick('/categories')}
+            />
+            <BottomNavigationAction
+              label="Cart"
+              value="cart"
+              icon={<ShoppingCartIcon />}
+              onClick={() => handleClick('/cart')}
+            />
+            <BottomNavigationAction
+              label="Dashboard"
+              value="dashboard"
+              icon={<DashboardIcon />}
+              onClick={() => handleClick('/dashboard')}
+            />
         </BottomNavigation>
-        </Toolbar>
+      </Toolbar>
     </AppBar>
   )
 }
