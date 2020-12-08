@@ -10,6 +10,9 @@ import LaptopChromebook from '@material-ui/icons/LaptopChromebook'
 import SearchIcon from '@material-ui/icons/Search'
 
 const useStyles = makeStyles((theme) => ({
+  header: {
+    paddingBottom: 8
+  },
   rentitButton: {
     marginRight: theme.spacing(2)
   },
@@ -62,7 +65,7 @@ function Header () {
   const classes = useStyles()
 
   return (
-    <div>
+    <div className={classes.header}>
       <AppBar position="sticky">
         <Toolbar>
           <IconButton

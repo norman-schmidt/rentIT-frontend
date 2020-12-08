@@ -6,7 +6,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 import HomeIcon from '@material-ui/icons/Home'
 import ListIcon from '@material-ui/icons/List'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import SearchIcon from '@material-ui/icons/Search'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 
 import { useHistory, useLocation } from 'react-router-dom'
@@ -19,13 +19,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: theme.breakpoints.values.md,
     boxShadow: '0px 0px 10px -2px rgba(0,0,0,0.2)'
   },
-  toolbar: {
-    padding: 0,
-    width: 'inherit'
-  },
   bottomNavigation: {
-    flexGrow: 0.9,
-    maxWidth: 'inherit',
+    flexGrow: 1,
+    width: '100%',
     height: '100%'
   }
 }))
@@ -62,8 +58,8 @@ function Footer () {
   }
 
   return (
-    <AppBar elevation={4} position="fixed" color="transparent" className={classes.appBar}>
-      <Toolbar className={classes.toolbar}>
+    <AppBar elevation={4} position="fixed" color="transparent" className={classes.appBar} noGutters>
+      <Toolbar disableGutters>
         <BottomNavigation
             value={value}
             onChange={handleChange}
@@ -83,10 +79,10 @@ function Footer () {
               onClick={() => handleClick('/categories')}
             />
             <BottomNavigationAction
-              label="Cart"
-              value="cart"
-              icon={<ShoppingCartIcon />}
-              onClick={() => handleClick('/cart')}
+              label="Search"
+              value="search"
+              icon={<SearchIcon />}
+              onClick={() => handleClick('/search')}
             />
             <BottomNavigationAction
               label="Dashboard"

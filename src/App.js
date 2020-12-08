@@ -3,7 +3,7 @@ import React from 'react'
 
 import Home from './components/Home'
 import Categories from './components/Categories'
-import ShoppingCart from './components/ShoppingCart'
+import ShoppingCart from './components/Search'
 import Dashboard from './components/Dashboard'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -14,6 +14,7 @@ import Container from '@material-ui/core/Container'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 const theme = createMuiTheme({
+  spacing: 8,
   palette: {
     primary: {
       main: '#673ab7'
@@ -40,7 +41,7 @@ function App() {
           <Header></Header>
           <Route exact path="/" component={Home}></Route>
           <Route path="/categories" component={Categories}></Route>
-          <Route path="/cart" component={ShoppingCart}></Route>
+          <Route path="/search" component={ShoppingCart}></Route>
           <Route path="/dashboard" component={Dashboard}></Route>
           <Footer></Footer>
         </Container>
