@@ -1,5 +1,4 @@
-import React from 'react'
-
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -15,7 +14,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   appBar: {
     top: 'auto',
-    bottom: 0,
+    bottom: -1,
     right: 'auto',
     maxWidth: theme.breakpoints.values.md,
     boxShadow: '0px 0px 10px -2px rgba(0,0,0,0.2)'
@@ -26,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
   bottomNavigation: {
     flexGrow: 0.9,
-    maxWidth: 'inherit'
+    maxWidth: 'inherit',
+    height: '100%'
   }
 }))
 
@@ -35,9 +35,23 @@ function Footer () {
   const history = useHistory()
   const path = useLocation().pathname
 
-  let end = path.indexOf('/', 1)
-  if (end === -1) end = path.length
-  const [value, setValue] = React.useState(path.substring(1, end))
+  // set the right bottomNavigation to active
+  const [value, setValue] = useState(getPathValue())
+
+  function getPathValue () {
+    if (path.length === 1) return 'home'
+    else {
+      let end = path.indexOf('/', 1)
+      if (end === -1) {
+        end = path.length
+      }
+      return path.substring(1, end)
+    }
+  }
+
+  useEffect(() => {
+    setValue(getPathValue())
+  })
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
