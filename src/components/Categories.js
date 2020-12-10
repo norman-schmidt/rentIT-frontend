@@ -11,8 +11,6 @@ const styles = theme => ({
   skeleton: {
     margin: theme.spacing(2),
     height: 50
-  },
-  categoryList: {
   }
 })
 
@@ -41,7 +39,7 @@ class Categories extends React.Component {
     const { categories } = this.state
     const categorieList = categories.length
       ? (
-          <List className={classes.categoryList}>
+          <List>
               {categories.map(categorie => {
                 return (
               <ListItem button key={categorie.id}>

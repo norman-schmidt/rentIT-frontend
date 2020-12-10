@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 
 import { makeStyles, fade } from '@material-ui/core/styles'
@@ -8,6 +9,11 @@ import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
 import LaptopChromebook from '@material-ui/icons/LaptopChromebook'
 import SearchIcon from '@material-ui/icons/Search'
+
+import { useHistory } from 'react-router-dom'
+
+import { connect } from 'react-redux'
+import { search } from '../actions/searchAction'
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -61,8 +67,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-function Header () {
+function Header (props) {
   const classes = useStyles()
+  const { searchValue } = props
+  const history = useHistory()
 
   return (
     <div className={classes.header}>
@@ -73,6 +81,9 @@ function Header () {
             className={classes.rentitButton}
             color="inherit"
             aria-label="rentit-button"
+            onClick={() => {
+              history.push('/')
+            }}
           >
             <LaptopChromebook />
           </IconButton>
@@ -86,9 +97,17 @@ function Header () {
             <div>
                 <InputBase
                 placeholder="Search…"
+                defaultValue={searchValue}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    props.search(e.target.value)
+                    history.push('/search/' + e.target.value)
+                    console.log(history)
+                  }
                 }}
                 inputProps={{ 'aria-label': 'search' }}
                 />
@@ -100,4 +119,15 @@ function Header () {
   )
 }
 
-export default Header
+const mapStateToProps = (state) => {
+  return {
+    searchValue: state.searchValue
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    search: (value) => { dispatch(search(value)) }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
