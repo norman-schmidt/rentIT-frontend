@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/rentIT-frontend/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/rentIT-frontend/static/js/main.f81da3bc.chunk.js",
+    "main.js.map": "/rentIT-frontend/static/js/main.f81da3bc.chunk.js.map",
+    "runtime-main.js": "/rentIT-frontend/static/js/runtime-main.14684b75.js",
+    "runtime-main.js.map": "/rentIT-frontend/static/js/runtime-main.14684b75.js.map",
+    "static/js/2.d291375a.chunk.js": "/rentIT-frontend/static/js/2.d291375a.chunk.js",
+    "static/js/2.d291375a.chunk.js.map": "/rentIT-frontend/static/js/2.d291375a.chunk.js.map",
+    "index.html": "/rentIT-frontend/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/rentIT-frontend/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.d291375a.chunk.js.LICENSE.txt": "/rentIT-frontend/static/js/2.d291375a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.14684b75.js",
+    "static/js/2.d291375a.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.f81da3bc.chunk.js"
+  ]
+}
