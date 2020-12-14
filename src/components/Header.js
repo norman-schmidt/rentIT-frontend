@@ -77,6 +77,7 @@ function Header (props) {
       <AppBar position="sticky">
         <Toolbar>
           <IconButton
+            disableRipple
             edge="start"
             className={classes.rentitButton}
             color="inherit"
@@ -130,4 +131,5 @@ const mapDispatchToProps = (dispatch) => {
     search: (value) => { dispatch(search(value)) }
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Header)
