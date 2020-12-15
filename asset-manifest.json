@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/rentIT-frontend/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/rentIT-frontend/static/js/main.f81da3bc.chunk.js",
-    "main.js.map": "/rentIT-frontend/static/js/main.f81da3bc.chunk.js.map",
-    "runtime-main.js": "/rentIT-frontend/static/js/runtime-main.14684b75.js",
-    "runtime-main.js.map": "/rentIT-frontend/static/js/runtime-main.14684b75.js.map",
-    "static/js/2.d291375a.chunk.js": "/rentIT-frontend/static/js/2.d291375a.chunk.js",
-    "static/js/2.d291375a.chunk.js.map": "/rentIT-frontend/static/js/2.d291375a.chunk.js.map",
-    "index.html": "/rentIT-frontend/index.html",
-    "static/css/main.6dea0f05.chunk.css.map": "/rentIT-frontend/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.d291375a.chunk.js.LICENSE.txt": "/rentIT-frontend/static/js/2.d291375a.chunk.js.LICENSE.txt"
+    "main.css": "/rentit24.tech/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/rentit24.tech/static/js/main.470b86c5.chunk.js",
+    "main.js.map": "/rentit24.tech/static/js/main.470b86c5.chunk.js.map",
+    "runtime-main.js": "/rentit24.tech/static/js/runtime-main.3e260398.js",
+    "runtime-main.js.map": "/rentit24.tech/static/js/runtime-main.3e260398.js.map",
+    "static/js/2.fb98c0c3.chunk.js": "/rentit24.tech/static/js/2.fb98c0c3.chunk.js",
+    "static/js/2.fb98c0c3.chunk.js.map": "/rentit24.tech/static/js/2.fb98c0c3.chunk.js.map",
+    "index.html": "/rentit24.tech/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/rentit24.tech/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.fb98c0c3.chunk.js.LICENSE.txt": "/rentit24.tech/static/js/2.fb98c0c3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.14684b75.js",
-    "static/js/2.d291375a.chunk.js",
+    "static/js/runtime-main.3e260398.js",
+    "static/js/2.fb98c0c3.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.f81da3bc.chunk.js"
+    "static/js/main.470b86c5.chunk.js"
   ]
 }
