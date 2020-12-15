@@ -2,7 +2,7 @@
   "name": "rentit-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://norman-schmidt.github.io/rentIT-frontend/",
+  "homepage": "rentit24.tech/",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
