@@ -2,6 +2,7 @@
 import React from 'react'
 
 import { Box, Button, Grid, Paper, Typography, withStyles } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -25,7 +26,8 @@ const styles = theme => ({
   info: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    padding: 20
   },
   title: {
     display: 'flex',
@@ -49,17 +51,19 @@ const styles = theme => ({
 
 function ArticleListItem (props) {
   const { classes } = props
-
+  const { article } = props
+  const history = useHistory()
+  console.log(article)
   return (
-        <Paper variant="outlined" square className={classes.root} onClick={(ev) => { console.log(ev.target.value) }}>
+        <Paper variant="outlined" square className={classes.root} onClick={() => { history.push('/article/' + article.articleId) }}>
           <Grid container spacing={3} component={Button} className={classes.gridContainer}>
             <Grid item xs={12} sm={5}>
-              <img className={classes.image} src="https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_76979761/fee_786_587_png"></img>
+              <img className={classes.image} src={article.images[0].imageLink}></img>
             </Grid>
             <Grid item xs={12} sm={7} className={classes.info}>
-              <Typography className={classes.title} align="left" variant="h6">SAMSUNG Galaxy Fold 2 256 GB Mystic Black</Typography>
+              <Typography className={classes.title} align="left" variant="h6">{article.name}</Typography>
               <Box className={classes.price}>
-              <Typography variant="h6">1948.61 €</Typography>
+              <Typography variant="h6">{article.price.toFixed(2).replace('.', ',')} €</Typography>
               </Box>
             </Grid>
           </Grid>

@@ -17,6 +17,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import searchReducer from './reducers/searchReducer'
+import Category from './components/Category'
 
 const theme = createMuiTheme({
   spacing: 8,
@@ -54,8 +55,9 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home}></Route>
               <Route exact path="/article/:article_id" component={Article}></Route>
+              <Route path="/categories/:category_id" component={Category}></Route>
               <Route path="/categories" component={Categories}></Route>
-              <Route path="/search/:searchValue" component={Search}></Route>
+              <Route path="/search/:search_value" component={Search}></Route>
               <Route path="/search" component={Search}></Route>
               <Route path="/dashboard" component={Dashboard}></Route>
             </Switch>

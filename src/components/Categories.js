@@ -21,11 +21,11 @@ class Categories extends React.Component {
   }
 
   componentDidMount () {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
+    axios.get('https://rentit-thb.herokuapp.com/api/categories/')
       .then(res => {
         console.log(res)
         this.setState({
-          categories: res.data.slice(20)
+          categories: res.data
         })
       })
   }
@@ -42,12 +42,12 @@ class Categories extends React.Component {
           <List>
               {categories.map(categorie => {
                 return (
-              <ListItem button key={categorie.id}>
-                <ListItemIcon>
-                  <SmartphoneIcon />
-                </ListItemIcon>
-                <ListItemText primary={categorie.title} />
-              </ListItem>
+                  <ListItem button key={categorie.categoryId} onClick={() => this.props.history.push('/categories/' + categorie.categoryId)}>
+                    <ListItemIcon>
+                      <SmartphoneIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={categorie.name} />
+                  </ListItem>
                 )
               })}
           </List>

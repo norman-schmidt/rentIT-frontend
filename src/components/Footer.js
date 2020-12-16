@@ -58,7 +58,7 @@ function Footer () {
   }
 
   return (
-    <AppBar elevation={4} position="fixed" color="transparent" className={classes.appBar} noGutters>
+    <AppBar elevation={4} position="fixed" color="transparent" className={classes.appBar}>
       <Toolbar disableGutters>
         <BottomNavigation
             value={value}

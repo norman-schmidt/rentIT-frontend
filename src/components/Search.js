@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ArticleListItem from './ArticleListItem'
 
@@ -8,33 +8,46 @@ import { Box, Typography, withStyles } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { search } from '../actions/searchAction'
 
+import { useHistory } from 'react-router-dom'
+import axios from 'axios'
+
 const styles = theme => ({
 })
 
 function Search (props) {
+  const history = useHistory()
   // const { classes } = props
   const searchValue = props.searchValue
-  const searchValueUrl = props.match.params.searchValue
-  if (searchValueUrl && searchValue !== searchValueUrl) props.search(searchValueUrl)
-  console.log(searchValue)
-  const searchList = searchValue !== ''
+  const searchValueUrl = props.match.params.search_value
+  if (searchValueUrl && searchValue !== searchValueUrl) {
+    props.search(searchValueUrl)
+  } else if (!searchValueUrl && searchValue !== '') {
+    history.replace('/search/' + searchValue)
+  }
+
+  const [articles, setArticles] = useState([])
+  useEffect(() => {
+    axios.get('https://rentit-thb.herokuapp.com/api/articles/')
+      .then(res => {
+        console.log(res)
+        setArticles(res.data)
+      })
+  }, [])
+  console.log(articles)
+  const searchList = (searchValue !== '' && articles.length > 0)
     ? (
-      <Box align="center" mt={3}>
+    <Box align="center" mt={3}>
         <Typography align="left">Ihre suche nach {searchValue} ergab folgende Treffer:</Typography>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
-        <ArticleListItem></ArticleListItem>
+        {articles.map((article) => {
+          console.log(article.name)
+          console.log(searchValue)
+          if (article.articleId && article.images[0] && article.name.toLowerCase().includes(searchValue.toLowerCase())) {
+            return (
+              <ArticleListItem key={article.articleId } article={article}></ArticleListItem>
+            )
+          }
+          return null
+        })}
       </Box>
       )
     : (

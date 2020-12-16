@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-// import axios from 'axios'
+import axios from 'axios'
 
 import { withStyles } from '@material-ui/core/styles'
 import { Container, Grid, Button, Typography } from '@material-ui/core'
@@ -28,6 +28,9 @@ const styles = theme => ({
     }
   },
   information: {
+    paddingLeft: 30
+  },
+  moreInformation: {
     paddingTop: 40
   },
   metaInfo: {
@@ -43,59 +46,41 @@ const styles = theme => ({
   }
 })
 
-const initState = {
-  article: {
-    id: 1,
-    name: 'SAMSUNG Galaxy Fold 2 256 GB Mystic Black',
-    serialNumber: 1234,
-    model: 'Galaxy Fold 2',
-    stockLevel: 3,
-    price: 1948.61,
-    properties: {
-      battery: '9h',
-      displays: '2'
-    },
-    category: 'Smartphones',
-    images: [
-      'https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_76979761/fee_786_587_png',
-      'https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_76979837/fee_786_587_png',
-      'https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_76979852/fee_786_587_png'
-    ]
-  }
-}
-
 class Article extends React.Component {
-    state = initState
+    state = {
+      article: {}
+    }
+
+    articleId = this.props.match.params.article_id
 
     componentDidMount () {
-    // fetch stuff
-    //
-    //   axios.get('https://jsonplaceholder.typicode.com/posts')
-    //     .then(res => {
-    //       console.log(res)
-    //       this.setState({
-    //         categories: res.data.slice(20)
-    //       })
-    //     })
+      axios.get('https://rentit-thb.herokuapp.com/api/articles/' + this.articleId)
+        .then(res => {
+          console.log(res)
+          this.setState({
+            article: res.data
+          })
+        })
     }
 
     render () {
       const { classes } = this.props
-      const article = this.state.article
-      const articleComponent = article
+      const { article } = this.state
+      console.log(article)
+      const articleComponent = article.articleId
         ? (
             <Grid container>
                 <Grid item xs={12} md={6} align="center">
-                    <img src={article.images[0]} className={classes.image}></img>
+                    <img src={article.images[0].imageLink} className={classes.image}></img>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} className={classes.information}>
                     <Typography variant="h5">{article.name}</Typography>
                     <div className={classes.metaInfo}>
                         <Typography>Serial-No: {article.serialNumber}</Typography>
                         <Typography>Model: {article.model}</Typography>
                     </div>
                     <div>
-                        <Typography className={classes.price}variant="h4">{article.price} €</Typography>
+                        <Typography className={classes.price} variant="h4">{article.price.toFixed(2).replace('.', ',')} €</Typography>
                         <Button
                             variant="contained"
                             color="primary"
@@ -106,7 +91,10 @@ class Article extends React.Component {
                         </Button>
                     </div>
                 </Grid>
-                <Grid item xs={12} className={classes.information}>
+                <Grid item xs={12} className={classes.moreInformation}>
+                  <Typography variant="p">{article.description}</Typography>
+                </Grid>
+                <Grid item xs={12} className={classes.moreInformation}>
                     <Typography variant="h5">Properties...</Typography>
                 </Grid>
             </Grid>
