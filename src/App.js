@@ -12,7 +12,7 @@ import Footer from './components/Footer'
 import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
