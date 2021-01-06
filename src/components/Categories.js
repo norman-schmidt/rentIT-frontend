@@ -15,6 +15,7 @@ const styles = theme => ({
 })
 
 function Categories (props) {
+  // const [open, setOpen] = useState(false)
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
@@ -24,6 +25,10 @@ function Categories (props) {
         setCategories(res.data)
       })
   }, [])
+
+  // const handleClick = () => {
+  //   setOpen(!open)
+  // }
 
   const { classes } = props
   return (
