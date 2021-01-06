@@ -17,6 +17,7 @@ const styles = theme => ({
 function Search (props) {
   const history = useHistory()
   // const { classes } = props
+
   const searchValue = props.searchValue
   const searchValueUrl = props.match.params.search_value
   if (searchValueUrl && searchValue !== searchValueUrl) {
@@ -34,6 +35,7 @@ function Search (props) {
       })
   }, [])
   console.log(articles)
+
   const searchList = (searchValue !== '' && articles.length > 0)
     ? (
     <Box align="center" mt={3}>
