@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -14,49 +14,43 @@ const styles = theme => ({
   }
 })
 
-class Category extends React.Component {
-  categoryId = this.props.match.params.category_id
+function Category (props) {
+  const [category, setCategory] = useState([])
 
-  state = {
-    category: {}
-  }
+  const categoryId = props.match.params.category_id
 
-  componentDidMount () {
-    axios.get('https://rentit-thb.herokuapp.com/api/categories/' + this.categoryId)
+  useEffect(() => {
+    axios.get('https://rentit-thb.herokuapp.com/api/categories/' + categoryId)
       .then(res => {
-        this.setState({
-          category: res.data
-        })
+        console.log(res)
+        setCategory(res.data)
       })
-  }
+  }, [])
 
-  render () {
-    const { classes } = this.props
-    const { category } = this.state
-    console.log(category)
-    const articleList = category.articles !== undefined
-      ? (
-        <Box align="center" mt={3}>
-            {category.articles.map((article, index) => {
-              return <ArticleListItem key={index} article={article}></ArticleListItem>
+  const { classes } = props
+  console.log(category)
+  return (
+    <div>
+      {category.articles !== undefined
+        ? (
+          <Box align="center" mt={3}>
+              {category.articles.map((article, index) => {
+                return <ArticleListItem key={index} article={article}></ArticleListItem>
+              })}
+          </Box>
+          )
+        : (
+          <div>
+            {Array(30).fill(0).map((a, i) => {
+              return (
+                <Skeleton key={i} className={classes.skeleton} variant="rect"/>
+              )
             })}
-        </Box>
-        )
-      : (
-        <div>
-          {Array(30).fill(0).map((a, i) => {
-            return (
-              <Skeleton key={i} className={classes.skeleton} variant="rect"/>
-            )
-          })}
-        </div>
-        )
-    return (
-      <div>
-        {articleList}
-      </div>
-    )
-  }
+          </div>
+          )
+      }
+    </div>
+  )
 }
 
 export default withStyles(styles, { withTheme: true })(Category)
