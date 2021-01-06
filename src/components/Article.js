@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -46,83 +46,74 @@ const styles = theme => ({
   }
 })
 
-class Article extends React.Component {
-    state = {
-      article: {}
-    }
+function Article (props) {
+  const articleId = props.match.params.article_id
 
-    articleId = this.props.match.params.article_id
+  const [article, setArticle] = useState({})
 
-    componentDidMount () {
-      axios.get('https://rentit-thb.herokuapp.com/api/articles/' + this.articleId)
-        .then(res => {
-          console.log(res)
-          this.setState({
-            article: res.data
-          })
-        })
-    }
+  useEffect(() => {
+    axios.get('https://rentit-thb.herokuapp.com/api/articles/' + articleId)
+      .then(res => {
+        console.log(res)
+        setArticle(res.data)
+      })
+  }, [])
 
-    render () {
-      const { classes } = this.props
-      const { article } = this.state
-      console.log(article)
-      const articleComponent = article.articleId
-        ? (
-            <Grid container>
-                <Grid item xs={12} md={6} align="center">
-                    <img src={article.images[0].imageLink} className={classes.image}></img>
-                </Grid>
-                <Grid item xs={12} md={6} className={classes.information}>
-                    <Typography variant="h5">{article.name}</Typography>
-                    <div className={classes.metaInfo}>
-                        <Typography>Serial-No: {article.serialNumber}</Typography>
-                        <Typography>Model: {article.model}</Typography>
-                    </div>
-                    <div>
-                        <Typography className={classes.price} variant="h4">{article.price.toFixed(2).replace('.', ',')} €</Typography>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.priceButton}
-                            endIcon={<ShoppingCartIcon />}
-                        >
-                            Add
-                        </Button>
-                    </div>
-                </Grid>
-                <Grid item xs={12} className={classes.moreInformation}>
-                  <Typography variant="p">{article.description}</Typography>
-                </Grid>
-                <Grid item xs={12} className={classes.moreInformation}>
+  const { classes } = props
+  console.log(article)
+  return (
+      <Container className={classes.article}>
+        { article.articleId
+          ? (
+              <Grid container>
+                  <Grid item xs={12} md={6} align="center">
+                      <img src={article.images[0].imageLink} className={classes.image}></img>
+                  </Grid>
+                  <Grid item xs={12} md={6} className={classes.information}>
+                      <Typography variant="h5">{article.name}</Typography>
+                      <div className={classes.metaInfo}>
+                          <Typography>Serial-No: {article.serialNumber}</Typography>
+                          <Typography>Model: {article.model}</Typography>
+                      </div>
+                      <div>
+                          <Typography className={classes.price} variant="h4">{article.price.toFixed(2).replace('.', ',')} €</Typography>
+                          <Button
+                              variant="contained"
+                              color="primary"
+                              className={classes.priceButton}
+                              endIcon={<ShoppingCartIcon />}
+                          >
+                              Add
+                          </Button>
+                      </div>
+                  </Grid>
+                  <Grid item xs={12} className={classes.moreInformation}>
+                    <Typography paragraph>{article.description}</Typography>
                     <Typography variant="h5">Properties...</Typography>
-                </Grid>
-            </Grid>
-          )
-        : (
-            <Grid container>
-                <Grid item xs={12} md={6}>
-                    <Skeleton className={classes.skeleton} variant="rect" height={300}/>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Skeleton className={classes.skeleton}/>
-                    <Skeleton className={classes.skeleton} width="60%"/>
-                </Grid>
-                <Grid item xs={12}>
-                    <Skeleton className={classes.skeleton}/>
-                    <Skeleton className={classes.skeleton}/>
-                    <Skeleton className={classes.skeleton}/>
-                    <Skeleton className={classes.skeleton}/>
-                    <Skeleton className={classes.skeleton}/>
-                </Grid>
-            </Grid>
-          )
-      return (
-        <Container className={classes.article}>
-            { articleComponent }
-        </Container>
-      )
-    }
+                  </Grid>
+              </Grid>
+            )
+          : (
+              <Grid container>
+                  <Grid item xs={12} md={6}>
+                      <Skeleton className={classes.skeleton} variant="rect" height={300}/>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                      <Skeleton className={classes.skeleton}/>
+                      <Skeleton className={classes.skeleton} width="60%"/>
+                  </Grid>
+                  <Grid item xs={12}>
+                      <Skeleton className={classes.skeleton}/>
+                      <Skeleton className={classes.skeleton}/>
+                      <Skeleton className={classes.skeleton}/>
+                      <Skeleton className={classes.skeleton}/>
+                      <Skeleton className={classes.skeleton}/>
+                  </Grid>
+              </Grid>
+            )
+        }
+      </Container>
+  )
 }
 
 export default withStyles(styles, { withTheme: true })(Article)
