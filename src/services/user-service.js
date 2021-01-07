@@ -1,8 +1,8 @@
 import axios from 'axios'
 import authHeader from './auth-header'
 
-const API_URL = 'https://rentit-thb.herokuapp.com/api/articles/'
-const USERS_API = 'https://rentit-thb.herokuapp.com/api/users/'
+const API_URL = 'https://rentit-thb.herokuapp.com/api/'
+const USERS_API = 'https://rentit-thb.herokuapp.com/api/user/'
 
 class UserService {
   getPublicContent () {
