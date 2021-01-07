@@ -18,6 +18,9 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import searchReducer from './reducers/searchReducer'
 import Category from './components/Category'
+import Register from './components/register.component'
+import Login from './components/login.component'
+import Profile from './components/Profile'
 
 const theme = createMuiTheme({
   spacing: 8,
@@ -59,7 +62,10 @@ function App() {
               <Route path="/categories" component={Categories}></Route>
               <Route path="/search/:search_value" component={Search}></Route>
               <Route path="/search" component={Search}></Route>
+              <Route path="/signin" component={Login}></Route>
+              <Route path="/signup" component={Register}></Route>
               <Route path="/dashboard" component={Dashboard}></Route>
+              <Route path="/profile/:id" component={Profile}></Route>
             </Switch>
             <Footer></Footer>
           </Container>
