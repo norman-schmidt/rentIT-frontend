@@ -10,10 +10,12 @@ import InputBase from '@material-ui/core/InputBase'
 import LaptopChromebook from '@material-ui/icons/LaptopChromebook'
 import SearchIcon from '@material-ui/icons/Search'
 
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { search } from '../actions/searchAction'
+
+import AuthService from '../services/auth-service'
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -67,10 +69,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+let user
+
 function Header (props) {
   const classes = useStyles()
   const { searchValue } = props
   const history = useHistory()
+
+  let currentUser = false
+  user = AuthService.getCurrentUser()
+  console.log(user)
+
+  if (user) {
+    currentUser = true
+  }
 
   return (
     <div className={classes.header}>
@@ -114,6 +126,39 @@ function Header (props) {
                 />
             </div>
           </div>
+
+          {currentUser
+            ? (
+              <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={'/#'} className="nav-link">
+                    {user.username} profile
+                  </Link>
+
+                </li>
+                <li className="nav-item">
+                  <a href="/" className="nav-link" onClick={logout}>
+                    LogOut
+                  </a>
+                </li>
+              </div>
+              )
+            : (
+              <div className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link to={'/signin'} className="nav-link">
+                    Login
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to={'/signup'} className="nav-link">
+                    Sign Up
+                  </Link>
+                </li>
+              </div>
+              )}
+
         </Toolbar>
       </AppBar>
     </div>
@@ -125,6 +170,14 @@ const mapStateToProps = (state) => {
     searchValue: state.searchValue
   }
 }
+
+const logout = () => {
+  AuthService.logout()
+}
+
+// const loadUser = () => {
+//   this.props.history.push(`/profile/${user.id}`)
+// }
 
 const mapDispatchToProps = (dispatch) => {
   return {
