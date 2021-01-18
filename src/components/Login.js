@@ -15,7 +15,7 @@ import { CLEAR_MESSAGE } from '../actions/types'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     height: 80,
     width: 80,
     margin: theme.spacing(2),
+    marginBottom: 20,
     backgroundColor: theme.palette.primary.main
   },
   avatarIcon: {
@@ -87,7 +88,7 @@ export default function Login (props) {
           <AccountCircle className={classes.avatarIcon}/>
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Log in to your rentit24 account.
         </Typography>
         <form
           className={classes.form}
@@ -132,7 +133,7 @@ export default function Login (props) {
           >
             Sign In
           </Button>
-          <Typography variant="body2" align="center">
+          <Typography variant="body1" align="center">
             Dont have an account?&nbsp;
             <Link to="/register">
               Register

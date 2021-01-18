@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
 import LaptopChromebook from '@material-ui/icons/LaptopChromebook'
 import SearchIcon from '@material-ui/icons/Search'
+import { AccountCircle } from '@material-ui/icons'
 
 import { useHistory, Link } from 'react-router-dom'
 
@@ -16,6 +17,7 @@ import { useHistory, Link } from 'react-router-dom'
 // import { search } from '../actions/searchAction'
 
 import AuthService from '../services/auth-service'
+import { Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -66,6 +68,12 @@ const useStyles = makeStyles((theme) => ({
     //   width: '12ch',
     // }
     // transition
+  },
+  account: {
+    color: 'white',
+    marginLeft: theme.spacing(2),
+    marginRight: -5,
+    backgroundColor: theme.palette.primary
   }
 }))
 
@@ -128,34 +136,38 @@ function Header (props) {
 
           {currentUser
             ? (
-              <div className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link to={'/#'} className="nav-link">
-                    {user.username} profile
-                  </Link>
+              // <div className="navbar-nav ml-auto">
+              //   <li className="nav-item">
+              //     <Link to={'/#'} className="nav-link">
+              //       {user.username} profile
+              //     </Link>
 
-                </li>
-                <li className="nav-item">
-                  <a href="/" className="nav-link" onClick={logout}>
-                    LogOut
-                  </a>
-                </li>
-              </div>
+              //   </li>
+              //   <li className="nav-item">
+              //     <a href="/" className="nav-link" onClick={logout}>
+              //       LogOut
+              //     </a>
+              //   </li>
+              // </div>
+              <Avatar classname={classes.account} onClick={logout}>{user.username.charAt(0).toUpperCase()}</Avatar>
               )
             : (
-              <div className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link to={'/login'} className="nav-link">
-                    Login
-                  </Link>
-                </li>
+              // <div className="navbar-nav ml-auto">
+              //   <li className="nav-item">
+              //     <Link to={'/login'} className="nav-link">
+              //       Login
+              //     </Link>
+              //   </li>
 
-                <li className="nav-item">
-                  <Link to={'/register'} className="nav-link">
-                    Sign Up
-                  </Link>
-                </li>
-              </div>
+              //   <li className="nav-item">
+              //     <Link to={'/register'} className="nav-link">
+              //       Sign Up
+              //     </Link>
+              //   </li>
+              // </div>
+              <IconButton className={classes.account} component={Link} to='/login' aria-label="login">
+                <AccountCircle />
+              </IconButton>
               )}
 
         </Toolbar>
