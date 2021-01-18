@@ -21,16 +21,6 @@ import { isEmail } from 'validator'
 import { register } from '../actions/auth'
 import { CLEAR_MESSAGE } from '../actions/types'
 
-// const vpassword = (value) => {
-//   if (value.length < 6 || value.length > 40) {
-//     return (
-//       <div className='alert alert-danger' role='alert'>
-//         The password must be between 6 and 40 characters.
-//       </div>
-//     )
-//   }
-// }
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -49,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     width: 'inherit'
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(3)
   },
   submit: {
