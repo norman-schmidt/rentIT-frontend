@@ -5,26 +5,18 @@ import ArticleListItem from './ArticleListItem'
 
 import { Box, Typography, withStyles } from '@material-ui/core'
 
-import { connect } from 'react-redux'
-import { search } from '../actions/searchAction'
+// import { connect } from 'react-redux'
+// import { search } from '../actions/searchAction'
 
-import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 
 const styles = theme => ({
 })
 
 function Search (props) {
-  const history = useHistory()
   // const { classes } = props
 
-  const searchValue = props.searchValue
-  const searchValueUrl = props.match.params.search_value
-  if (searchValueUrl && searchValue !== searchValueUrl) {
-    props.search(searchValueUrl)
-  } else if (!searchValueUrl && searchValue !== '') {
-    history.replace('/search/' + searchValue)
-  }
+  const searchValue = props.match.params.search_value
 
   const [articles, setArticles] = useState([])
   useEffect(() => {
@@ -63,16 +55,17 @@ function Search (props) {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    searchValue: state.searchValue
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     searchValue: state.searchValue
+//   }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    search: (value) => { dispatch(search(value)) }
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     search: (value) => { dispatch(search(value)) }
+//   }
+// }
 
-export default withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Search))
+// export default withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Search))
+export default withStyles(styles, { withTheme: true })(Search)

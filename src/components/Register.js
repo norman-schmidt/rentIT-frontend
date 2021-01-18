@@ -1,290 +1,226 @@
-import React, { Component } from 'react'
-import Form from 'react-validation/build/form'
-import Input from 'react-validation/build/input'
-import CheckButton from 'react-validation/build/button'
-import { isEmail } from 'validator/validator'
+/* eslint-disable react/prop-types */
+import {
+  Avatar,
+  Button,
+  Container,
+  CssBaseline,
+  Grid,
+  makeStyles,
+  TextField,
+  Typography
+} from '@material-ui/core'
+import { AccountCircle } from '@material-ui/icons'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import AuthService from '../services/auth-service'
+// import { useSnackbar } from 'notistack'
 
-const required = value => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This field is required!
-      </div>
-    )
+import { isEmail } from 'validator'
+
+import { register } from '../actions/auth'
+import { CLEAR_MESSAGE } from '../actions/types'
+
+// const vpassword = (value) => {
+//   if (value.length < 6 || value.length > 40) {
+//     return (
+//       <div className='alert alert-danger' role='alert'>
+//         The password must be between 6 and 40 characters.
+//       </div>
+//     )
+//   }
+// }
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  avatar: {
+    height: 80,
+    width: 80,
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main
+  },
+  avatarIcon: {
+    height: 'inherit',
+    width: 'inherit'
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
   }
-}
+}))
 
-const vemail = value => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This is not a valid email.
-      </div>
-    )
-  }
-}
+export default function SignUp (props) {
+  const classes = useStyles()
+  //   const { enqueueSnackbar } = useSnackbar()
 
-const vusername = value => {
-  if (value.length < 3 || value.length > 20) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.
-      </div>
-    )
-  }
-}
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [address, setAddress] = useState('')
+  const [emailError, setEmailError] = useState(false)
+  const [firstNameError, setFirstNameError] = useState(false)
+  const [lastNameError, setLastNameError] = useState(false)
+  const [addressError, setAddressError] = useState(false)
+  const [pwdError, setPwdError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-const vpassword = value => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
-      </div>
-    )
-  }
-}
+  const { message } = useSelector((state) => state.message)
+  const dispatch = useDispatch()
 
-export default class Register extends Component {
-  constructor (props) {
-    super(props)
-    this.handleRegister = this.handleRegister.bind(this)
-    this.onChangeEmail = this.onChangeEmail.bind(this)
-    this.onChangeUsername = this.onChangeUsername.bind(this)
-    this.onChangePassword = this.onChangePassword.bind(this)
-    this.onChangeLastname = this.onChangeLastname.bind(this)
-    this.onChangeFirstname = this.onChangeFirstname.bind(this)
-    this.onChangeAddress = this.onChangeAddress.bind(this)
-    this.onChangeBirthday = this.onChangeBirthday.bind(this)
-
-    this.state = {
-      email: '',
-      username: '',
-      password: '',
-      lastname: '',
-      firstname: '',
-      address: '',
-      birthday: '',
-      successful: false,
-      message: ''
-    }
-  }
-
-  onChangeEmail (e) {
-    this.setState({
-      email: e.target.value
-    })
-  }
-
-  onChangeUsername (e) {
-    this.setState({
-      username: e.target.value
-    })
-  }
-
-  onChangePassword (e) {
-    this.setState({
-      password: e.target.value
-    })
-  }
-
-  onChangeLastname (e) {
-    this.setState({
-      lastname: e.target.value
-    })
-  }
-
-  onChangeFirstname (e) {
-    this.setState({
-      firstname: e.target.value
-    })
-  }
-
-  onChangeAddress (e) {
-    this.setState({
-      address: e.target.value
-    })
-  }
-
-  onChangeBirthday (e) {
-    this.setState({
-      birthday: e.target.value
-    })
-  }
-
-  handleRegister (e) {
+  const handleRegister = (e) => {
     e.preventDefault()
 
-    this.setState({
-      message: '',
-      successful: false
+    setLoading(true)
+
+    const registerCallback = register(email, password, lastName, firstName, address)
+    registerCallback(dispatch)
+      .then(() => {
+        //   if (message) enqueueSnackbar(message, { variant: 'success' })
+        props.history.push('/dashboard')
+      })
+      .catch(() => {
+        setLoading(false)
+      })
+  }
+
+  useEffect(() => {
+    dispatch({
+      type: CLEAR_MESSAGE
     })
+  }, [])
 
-    this.form.validateAll()
-
-    if (this.checkBtn.context._errors.length === 0) {
-      AuthService.register(
-        this.state.email,
-        this.state.username,
-        this.state.password,
-        this.state.lastname,
-        this.state.firstname,
-        this.state.address,
-        this.state.birthday
-      ).then(
-        response => {
-          this.setState({
-            message: response.data.message,
-            successful: true
-          })
-        },
-        error => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString()
-
-          this.setState({
-            successful: false,
-            message: resMessage
-          })
-        }
-      )
-    }
-  }
-
-  render () {
-    return (
-      <div className="col-md-12">
-        <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
-
-          <Form
-            onSubmit={this.handleRegister}
-            ref={c => {
-              this.form = c
-            }}
-          >
-            {!this.state.successful && (
-              <div>
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
-                    validations={[required, vemail]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="username">Username</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChangeUsername}
-                    validations={[required, vusername]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <Input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
-                    validations={[required, vpassword]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="lastname">lastname</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="lastname"
-                    value={this.state.lastname}
-                    onChange={this.onChangeLastname}
-                    validations={[required, vusername]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="firstname">firstname</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="firstname"
-                    value={this.state.firstname}
-                    onChange={this.onChangeFirstname}
-                    validations={[required, vusername]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="address">address</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="address"
-                    value={this.state.address}
-                    onChange={this.onChangeAddress}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="birthday">birthday(JJJJ-MM-DD)</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="birthday"
-                    value={this.state.birthday}
-                    onChange={this.onChangeBirthday}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <button className="btn btn-primary btn-block">Sign Up</button>
-                </div>
-              </div>
-            )}
-
-            {this.state.message && (
-              <div className="form-group">
-                <div
-                  className={
-                    this.state.successful
-                      ? 'alert alert-success'
-                      : 'alert alert-danger'
-                  }
-                  role="alert"
-                >
-                  {this.state.message}
-                </div>
-              </div>
-            )}
-            <CheckButton
-              style={{ display: 'none' }}
-              ref={c => {
-                this.checkBtn = c
-              }}
+  return (
+    <Container component='main' maxWidth='xs'>
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <AccountCircle className={classes.avatarIcon} />
+        </Avatar>
+        <Typography component='h1' variant='h5'>
+          Sign up
+        </Typography>
+        <form onSubmit={handleRegister} className={classes.form}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                error = {firstNameError}
+                helperText = {firstNameError ? 'The first name must have 3 - 20 characters' : ''}
+                autoComplete='fname'
+                name='firstName'
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                onChange={(e) => setFirstName(e.target.value)}
+                onBlur={(e) => { setFirstNameError(e.target.value.length < 3 || e.target.value.length > 20) }}
+                onFocus={(e) => { setFirstNameError(false) }}
+                id='firstName'
+                label='First Name'
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                error = {lastNameError}
+                helperText = {lastNameError ? 'The last name must have 3 - 20 characters' : ''}
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                onChange={(e) => setLastName(e.target.value)}
+                onBlur={(e) => { setLastNameError(e.target.value.length < 3 || e.target.value.length > 20) }}
+                onFocus={() => { setLastNameError(false) }}
+                id='lastName'
+                label='Last Name'
+                name='lastName'
+                autoComplete='lname'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                error = {addressError}
+                helperText = {addressError ? 'The address must have 3 - 20 characters' : ''}
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                onChange={(e) => setAddress(e.target.value)}
+                onBlur={(e) => { setAddressError(e.target.value.length < 3 || e.target.value.length > 20) }}
+                onFocus={() => { setAddressError(false) }}
+                id='adress'
+                label='Adress'
+                name='adress'
+                autoComplete='address'
+              />
+            </Grid>
+            <Grid item xs={12}>
+            <TextField
+                error = {emailError}
+                helperText = {emailError ? 'Please enter a valid Email Adress' : ''}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                onChange={(e) => setEmail(e.target.value)}
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                onBlur={() => { setEmailError(!isEmail(email)) }}
+                onFocus={() => { setEmailError(false) }}
             />
-          </Form>
-        </div>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                error = {pwdError}
+                helperText = {pwdError ? 'The password must have 6 - 40 characters' : ''}
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                onChange={(e) => setPassword(e.target.value)}
+                onBlur={(e) => { setPwdError(e.target.value.length < 6 || e.target.value.length > 40) }}
+                onFocus={() => { setPwdError(false) }}
+                name='password'
+                label='Password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+              />
+            </Grid>
+          </Grid>
+          {message && <Typography color='error' align="center">{message}</Typography>}
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='primary'
+            className={classes.submit}
+            disabled={loading || firstNameError || lastNameError || addressError || emailError || pwdError}
+          >
+            Sign Up
+          </Button>
+          <Grid container justify='center'>
+            <Grid item>
+                <Typography variant="body2" align="center">
+                    Already have an account?&nbsp;
+                    <Link to="/login">
+                        Login
+                    </Link>
+                </Typography>
+            </Grid>
+          </Grid>
+        </form>
       </div>
-    )
-  }
+    </Container>
+  )
 }

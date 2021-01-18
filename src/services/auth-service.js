@@ -3,11 +3,11 @@ import axios from 'axios'
 const API_URL = 'https://rentit-thb.herokuapp.com/api/auth/'
 
 class AuthService {
-  login (username, password) {
+  login (email, password) {
     return axios
       .post(API_URL + 'signin', {
-        username,
-        password
+        username: email,
+        password: password
       })
       .then(response => {
         if (response.data.accessToken) {
@@ -22,15 +22,15 @@ class AuthService {
     localStorage.removeItem('user')
   }
 
-  register (email, username, password, lastname, firstname, address, birthday) {
+  register (email, password, lastname, firstname, address) {
     return axios.post(API_URL + 'signup', {
       email,
-      username,
+      username: email,
       password,
       lastname,
       firstname,
       address,
-      birthday
+      role: []
     })
   }
 

@@ -10,7 +10,7 @@ class UserService {
   }
 
   getUserBoard () {
-    return axios.get(API_URL + 'user', { headers: authHeader() })
+    return axios.get(USERS_API, { headers: authHeader() })
   }
 
   getOneUser (id) {

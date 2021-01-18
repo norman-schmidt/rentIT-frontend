@@ -12,8 +12,8 @@ import SearchIcon from '@material-ui/icons/Search'
 
 import { useHistory, Link } from 'react-router-dom'
 
-import { connect } from 'react-redux'
-import { search } from '../actions/searchAction'
+// import { connect } from 'react-redux'
+// import { search } from '../actions/searchAction'
 
 import AuthService from '../services/auth-service'
 
@@ -117,7 +117,6 @@ function Header (props) {
                 }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    props.search(e.target.value)
                     history.push('/search/' + e.target.value)
                     console.log(history)
                   }
@@ -146,13 +145,13 @@ function Header (props) {
             : (
               <div className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link to={'/signin'} className="nav-link">
+                  <Link to={'/login'} className="nav-link">
                     Login
                   </Link>
                 </li>
 
                 <li className="nav-item">
-                  <Link to={'/signup'} className="nav-link">
+                  <Link to={'/register'} className="nav-link">
                     Sign Up
                   </Link>
                 </li>
@@ -165,24 +164,25 @@ function Header (props) {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    searchValue: state.searchValue
-  }
-}
-
 const logout = () => {
   AuthService.logout()
 }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     searchValue: state.searchValue
+//   }
+// }
 
 // const loadUser = () => {
 //   this.props.history.push(`/profile/${user.id}`)
 // }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    search: (value) => { dispatch(search(value)) }
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     search: (value) => { dispatch(search(value)) }
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+// export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default Header
