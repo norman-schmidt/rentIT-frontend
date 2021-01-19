@@ -13,6 +13,8 @@ import { AccountCircle } from '@material-ui/icons'
 
 import { useHistory, Link } from 'react-router-dom'
 
+import { useSelector } from 'react-redux'
+
 // import { connect } from 'react-redux'
 // import { search } from '../actions/searchAction'
 
@@ -62,12 +64,10 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`
     // [theme.breakpoints.up('sm')]: {
     //   width: '12ch',
     // }
-    // transition
   },
   account: {
     color: 'white',
@@ -77,20 +77,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-let user
+const logout = () => {
+  AuthService.logout()
+}
 
 function Header (props) {
   const classes = useStyles()
   const { searchValue } = props
   const history = useHistory()
+  const { isLoggedIn } = useSelector(state => state.auth)
 
-  let currentUser = false
-  user = AuthService.getCurrentUser()
+  const user = AuthService.getCurrentUser()
   console.log(user)
-
-  if (user) {
-    currentUser = true
-  }
 
   return (
     <div className={classes.header}>
@@ -134,37 +132,11 @@ function Header (props) {
             </div>
           </div>
 
-          {currentUser
+          {isLoggedIn
             ? (
-              // <div className="navbar-nav ml-auto">
-              //   <li className="nav-item">
-              //     <Link to={'/#'} className="nav-link">
-              //       {user.username} profile
-              //     </Link>
-
-              //   </li>
-              //   <li className="nav-item">
-              //     <a href="/" className="nav-link" onClick={logout}>
-              //       LogOut
-              //     </a>
-              //   </li>
-              // </div>
-              <Avatar classname={classes.account} onClick={logout}>{user.username.charAt(0).toUpperCase()}</Avatar>
+              <Avatar className={classes.account} onClick={logout}>{user.username.charAt(0).toUpperCase()}</Avatar>
               )
             : (
-              // <div className="navbar-nav ml-auto">
-              //   <li className="nav-item">
-              //     <Link to={'/login'} className="nav-link">
-              //       Login
-              //     </Link>
-              //   </li>
-
-              //   <li className="nav-item">
-              //     <Link to={'/register'} className="nav-link">
-              //       Sign Up
-              //     </Link>
-              //   </li>
-              // </div>
               <IconButton className={classes.account} component={Link} to='/login' aria-label="login">
                 <AccountCircle />
               </IconButton>
@@ -174,10 +146,6 @@ function Header (props) {
       </AppBar>
     </div>
   )
-}
-
-const logout = () => {
-  AuthService.logout()
 }
 
 // const mapStateToProps = (state) => {

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { React, useEffect, useState } from 'react'
 
-import { login } from '../actions/auth'
+import { login } from '../../actions/auth'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Link, Redirect } from 'react-router-dom'
@@ -9,7 +9,7 @@ import { Avatar, Button, Container, CssBaseline, makeStyles, TextField, Typograp
 import { AccountCircle } from '@material-ui/icons'
 
 import { isEmail } from 'validator'
-import { CLEAR_MESSAGE } from '../actions/types'
+import { CLEAR_MESSAGE } from '../../actions/types'
 
 // import { useSnackbar } from 'notistack'
 

@@ -5,7 +5,7 @@ import axios from 'axios'
 import { withStyles } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
-import ArticleListItem from './ArticleListItem'
+import ArticleListItem from '../Articles/ArticleListItem'
 
 const styles = theme => ({
   skeleton: {

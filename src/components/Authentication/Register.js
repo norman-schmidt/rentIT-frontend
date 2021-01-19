@@ -18,8 +18,8 @@ import { Link } from 'react-router-dom'
 
 import { isEmail } from 'validator'
 
-import { register } from '../actions/auth'
-import { CLEAR_MESSAGE } from '../actions/types'
+import { register } from '../../actions/auth'
+import { CLEAR_MESSAGE } from '../../actions/types'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
