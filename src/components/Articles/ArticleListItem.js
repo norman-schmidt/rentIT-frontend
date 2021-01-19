@@ -58,7 +58,7 @@ function ArticleListItem (props) {
         <Paper variant="outlined" square className={classes.root} onClick={() => { history.push('/article/' + article.articleId) }}>
           <Grid container spacing={3} component={Button} className={classes.gridContainer}>
             <Grid item xs={12} sm={5}>
-              <img className={classes.image} src={article.images[0].imageLink}></img>
+              <img className={classes.image} src={article.images[0] ? article.images[0].imageLink : 'https://i.stack.imgur.com/GNhxO.png'}></img>
             </Grid>
             <Grid item xs={12} sm={7} className={classes.info}>
               <Typography className={classes.title} align="left" variant="h6">{article.name}</Typography>

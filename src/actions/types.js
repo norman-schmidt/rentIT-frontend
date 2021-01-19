@@ -6,3 +6,7 @@ export const LOGOUT = 'LOGOUT'
 
 export const SET_MESSAGE = 'SET_MESSAGE'
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE'
+
+export const ADD_ITEM = 'CLEAR_MESSAGE'
+export const REMOVE_ITEM = 'CLEAR_MESSAGE'
+export const DELETE_ITEM = 'CLEAR_MESSAGE'

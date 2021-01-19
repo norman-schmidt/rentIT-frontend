@@ -67,7 +67,7 @@ function Article (props) {
           ? (
               <Grid container>
                   <Grid item xs={12} md={6} align="center">
-                      <img src={article.images[0].imageLink} className={classes.image}></img>
+                      <img src={article.images[0] ? article.images[0].imageLink : 'https://i.stack.imgur.com/GNhxO.png'} className={classes.image}></img>
                   </Grid>
                   <Grid item xs={12} md={6} className={classes.information}>
                       <Typography variant="h5">{article.name}</Typography>

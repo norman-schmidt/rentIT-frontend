@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react'
 // import AuthService from '../services/auth-service'
-import userService from '../services/user-service'
+import userService from '../../services/user-service'
 
 export default class Profile extends Component {
   constructor (props) {

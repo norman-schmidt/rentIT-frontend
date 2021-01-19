@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 
-import ArticleListItem from './Articles/ArticleListItem'
+import ArticleListItem from './ArticleListItem'
 
 import { Box, Typography, withStyles } from '@material-ui/core'
 
