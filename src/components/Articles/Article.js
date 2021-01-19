@@ -2,10 +2,13 @@
 import { React, useEffect, useState } from 'react'
 import axios from 'axios'
 
+import { useDispatch } from 'react-redux'
+
 import { withStyles } from '@material-ui/core/styles'
-import { Container, Grid, Button, Typography } from '@material-ui/core'
+import { Container, Grid, Button, Typography, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import { ADD_ITEM } from '../../actions/types'
 
 const styles = theme => ({
   article: {
@@ -41,15 +44,26 @@ const styles = theme => ({
   },
   priceButton: {
     marginTop: 20,
-    width: '80%',
+    width: '75%',
     height: 50
+  },
+  amountSelect: {
+    marginRight: theme.spacing(3),
+    marginTop: 20,
+    width: '15%',
+    height: 40
   }
 })
 
 function Article (props) {
+  const { classes } = props
+
   const articleId = props.match.params.article_id
 
   const [article, setArticle] = useState({})
+  const [amount, setAmount] = useState(1)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     axios.get('https://rentit-thb.herokuapp.com/api/articles/' + articleId)
@@ -59,8 +73,20 @@ function Article (props) {
       })
   }, [])
 
-  const { classes } = props
-  console.log(article)
+  const handleAmountChange = (event) => {
+    setAmount(event.target.value)
+  }
+
+  const handleAddToCart = () => {
+    dispatch({
+      type: ADD_ITEM,
+      payload: {
+        articleId: articleId,
+        amount: amount
+      }
+    })
+  }
+
   return (
       <Container className={classes.article}>
         { article.articleId
@@ -77,15 +103,38 @@ function Article (props) {
                       </div>
                       <div>
                           <Typography className={classes.price} variant="h4">{article.price.toFixed(2).replace('.', ',')} €</Typography>
+
+                          <FormControl className={classes.amountSelect}>
+                            <InputLabel id="amount-select-label">Amount</InputLabel>
+                            <Select
+                              labelId="amount-select-label"
+                              id="amount-select"
+                              value={amount}
+                              onChange={handleAmountChange}
+                            >
+                              <MenuItem value={1}>1</MenuItem>
+                              <MenuItem value={2}>2</MenuItem>
+                              <MenuItem value={3}>3</MenuItem>
+                              <MenuItem value={4}>4</MenuItem>
+                              <MenuItem value={5}>5</MenuItem>
+                              <MenuItem value={6}>6</MenuItem>
+                              <MenuItem value={7}>7</MenuItem>
+                              <MenuItem value={8}>8</MenuItem>
+                              <MenuItem value={9}>9</MenuItem>
+                              <MenuItem value={10}>10</MenuItem>
+                            </Select>
+                          </FormControl>
+
                           <Button
                               variant="contained"
                               color="primary"
                               className={classes.priceButton}
                               endIcon={<ShoppingCartIcon />}
+                              onClick={handleAddToCart}
                           >
-                              Add
+                              Add to cart
                           </Button>
-                      </div>
+                        </div>
                   </Grid>
                   <Grid item xs={12} className={classes.moreInformation}>
                     <Typography paragraph>{article.description}</Typography>
