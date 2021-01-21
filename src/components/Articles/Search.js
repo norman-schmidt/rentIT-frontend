@@ -37,7 +37,7 @@ function Search (props) {
           console.log(searchValue)
           if (article.articleId && article.images[0] && article.name.toLowerCase().includes(searchValue.toLowerCase())) {
             return (
-              <ArticleListItem key={article.articleId } article={article}></ArticleListItem>
+              <ArticleListItem key={article.articleId } articleId={article.articleId}></ArticleListItem>
             )
           }
           return null

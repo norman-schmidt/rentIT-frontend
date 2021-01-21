@@ -82,7 +82,7 @@ function Footer () {
               label="Search"
               value="search"
               icon={<SearchIcon />}
-              onClick={() => handleClick('/search')}
+              onClick={() => handleClick('/cart')}
             />
             <BottomNavigationAction
               label="Dashboard"

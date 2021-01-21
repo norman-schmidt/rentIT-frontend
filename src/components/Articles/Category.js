@@ -35,7 +35,7 @@ function Category (props) {
         ? (
           <Box align="center" mt={3}>
               {category.articles.map((article, index) => {
-                return <ArticleListItem key={index} article={article}></ArticleListItem>
+                return <ArticleListItem key={index} articleId={article.articleId}></ArticleListItem>
               })}
           </Box>
           )

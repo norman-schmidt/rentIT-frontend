@@ -22,6 +22,7 @@ import { SnackbarProvider } from 'notistack'
 
 import store from './store'
 import { Provider } from 'react-redux'
+import Cart from './components/Cart'
 
 const theme = createMuiTheme({
   spacing: 8,
@@ -62,6 +63,7 @@ function App() {
                 <Route exact path="/article/:article_id" component={Article}></Route>
                 <Route path="/categories/:category_id" component={Category}></Route>
                 <Route path="/categories" component={Categories}></Route>
+                <Route path="/cart" component={Cart}></Route>
                 <Route path="/search/:search_value" component={Search}></Route>
                 <Route path="/search" component={Search}></Route>
                 <Route path="/login" component={Login}></Route>
