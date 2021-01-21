@@ -6,10 +6,12 @@ import BottomNavigation from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 import HomeIcon from '@material-ui/icons/Home'
 import ListIcon from '@material-ui/icons/List'
-import SearchIcon from '@material-ui/icons/Search'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 
 import { useHistory, useLocation } from 'react-router-dom'
+import { ShoppingCart } from '@material-ui/icons'
+import { useSelector } from 'react-redux'
+import { Badge } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -31,6 +33,8 @@ function Footer () {
   const history = useHistory()
   const path = useLocation().pathname
 
+  const cart = useSelector(state => state.cart)
+
   // set the right bottomNavigation to active
   const [value, setValue] = useState(getPathValue())
 
@@ -41,7 +45,10 @@ function Footer () {
       if (end === -1) {
         end = path.length
       }
-      return path.substring(1, end)
+      const value = path.substring(1, end)
+      if (value === 'categories' || value === 'article' || value === 'search') return 'store'
+      else if (value === 'cart' || value === 'checkout') return 'cart'
+      else if (value === 'dashboard' || value === 'profile') return 'dashboard'
     }
   }
 
@@ -73,15 +80,15 @@ function Footer () {
               onClick={() => handleClick('/')}
             />
             <BottomNavigationAction
-              label="Categories"
-              value="categories"
+              label="Store"
+              value="store"
               icon={<ListIcon />}
               onClick={() => handleClick('/categories')}
             />
             <BottomNavigationAction
-              label="Search"
-              value="search"
-              icon={<SearchIcon />}
+              label="Cart"
+              value="cart"
+              icon={<Badge badgeContent={cart.items.length} color="primary"><ShoppingCart /></Badge>}
               onClick={() => handleClick('/cart')}
             />
             <BottomNavigationAction
