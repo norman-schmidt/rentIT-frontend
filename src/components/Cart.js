@@ -14,10 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = () => {
   const classes = useStyles()
-
   const cart = useSelector(state => state.cart)
-
-  console.log(cart)
 
   return (
         <div>
@@ -26,7 +23,7 @@ const Cart = () => {
                   <Grid item xs={12} md={6} align="center">
                     <Typography variant='h5'>Total: </Typography>
                   </Grid>
-                  <Grid item xs={12} md={6} justify="center">
+                  <Grid item xs={12} md={6}>
                     <Button className={classes.checkoutButton} variant="contained" color="primary"endIcon={<ArrowForwardIosIcon />}>Proceed to Checkout</Button>
                   </Grid>
                 </Grid>

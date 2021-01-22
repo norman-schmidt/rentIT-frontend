@@ -1,47 +1,53 @@
 /* eslint-disable default-param-last */
 import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM } from '../actions/types'
 
-const initialState = { items: [] }
+const initialState = JSON.parse(localStorage.getItem('cartItems'))
 
 export default function (state = initialState, action) {
   if (action === undefined) return state
 
   const { type, payload } = action
 
-  const itemIndex = state.items.findIndex((i) => {
-    return i.articleId === payload.articleId
-  })
+  let itemIndex
+  if (payload !== undefined) {
+    itemIndex = state.items.findIndex((i) => {
+      return i.articleId === payload.articleId
+    })
+  }
 
   switch (type) {
     case ADD_ITEM:
       if (itemIndex > -1) {
         state.items[itemIndex].amount += payload.amount
-        return state
       } else {
         state.items.push({ articleId: payload.articleId, amount: payload.amount })
-        return state
       }
+      break
 
     case REMOVE_ITEM:
       if (itemIndex > -1 && state.items[itemIndex].amount > 1) {
         state.items[itemIndex].amount--
-        return state
       } else {
-        return {
+        state = {
           items: state.items.filter((item) => {
             return item.articleId !== payload.articleId
           })
         }
       }
+      break
 
     case DELETE_ITEM:
-      return {
+      state = {
         items: state.items.filter((item) => {
           return item.articleId !== payload.articleId
         })
       }
+      break
 
     default:
       return state
   }
+
+  localStorage.setItem('cartItems', JSON.stringify(state))
+  return state
 }
