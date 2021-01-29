@@ -18,7 +18,7 @@ function Categories (props) {
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
-    axios.get('https://rentit-thb.herokuapp.com/api/categories/')
+    axios.get('https://rentit-thb.herokuapp.com/api/categories/name/')
       .then(res => {
         console.log(res)
         setCategories(res.data)
@@ -31,13 +31,13 @@ function Categories (props) {
       {categories.length
         ? (
             <List>
-                {categories.map(categorie => {
+                {categories.map((categorie, i) => {
                   return (
-                    <ListItem button key={categorie.categoryId} onClick={() => props.history.push('/categories/' + categorie.categoryId)}>
+                    <ListItem button key={i} onClick={() => props.history.push('/categories/' + categorie.categoryId)}>
                       <ListItemIcon>
                         <SmartphoneIcon />
                       </ListItemIcon>
-                      <ListItemText primary={categorie.name} />
+                      <ListItemText primary={categorie} />
                     </ListItem>
                   )
                 })}

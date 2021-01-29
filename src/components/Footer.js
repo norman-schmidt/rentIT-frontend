@@ -88,7 +88,7 @@ function Footer () {
             <BottomNavigationAction
               label="Cart"
               value="cart"
-              icon={<Badge badgeContent={cart.items.length} color="primary"><ShoppingCart /></Badge>}
+              icon={<Badge badgeContent={cart ? cart.items.length : 0} color="primary"><ShoppingCart /></Badge>}
               onClick={() => handleClick('/cart')}
             />
             <BottomNavigationAction

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Typography, Button, makeStyles, Grid } from '@material-ui/core'
-import ArticleListItem from './Articles/ArticleListItem'
+import ArticleListItem from '../Articles/ArticleListItem'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +33,7 @@ const Cart = () => {
               ? cart.items.map((item, index) => {
                   return (
                     <div key={index}>
-                      <ArticleListItem articleId={item.articleId}></ArticleListItem>
+                      <ArticleListItem articleId={item.article.articleId}></ArticleListItem>
                     </div>
                   )
                 })

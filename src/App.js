@@ -5,7 +5,8 @@ import Home from './components/Home'
 import Article from './components/Articles/Article'
 import Categories from './components/Articles/Categories'
 import Category from './components/Articles/Category'
-import Search from './components//Articles/Search'
+import Cart from './components/Order/Cart'
+import Search from './components/Articles/Search'
 import Dashboard from './components/Private/Dashboard'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -22,7 +23,6 @@ import { SnackbarProvider } from 'notistack'
 
 import store from './store'
 import { Provider } from 'react-redux'
-import Cart from './components/Cart'
 
 const theme = createMuiTheme({
   spacing: 8,

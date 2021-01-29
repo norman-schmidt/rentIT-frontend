@@ -1,9 +1,10 @@
 /* eslint-disable default-param-last */
 import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM } from '../actions/types'
 
-const initialState = JSON.parse(localStorage.getItem('cartItems'))
+const initialState = JSON.parse(localStorage.getItem('cartItems')) ?? { items: [] }
 
 export default function (state = initialState, action) {
+  console.log(state)
   if (action === undefined) return state
 
   const { type, payload } = action
@@ -11,7 +12,7 @@ export default function (state = initialState, action) {
   let itemIndex
   if (payload !== undefined) {
     itemIndex = state.items.findIndex((i) => {
-      return i.articleId === payload.articleId
+      return i.article.articleId === payload.articleId
     })
   }
 
@@ -20,7 +21,7 @@ export default function (state = initialState, action) {
       if (itemIndex > -1) {
         state.items[itemIndex].amount += payload.amount
       } else {
-        state.items.push({ articleId: payload.articleId, amount: payload.amount })
+        state.items.push({ article: { articleId: payload.articleId }, amount: payload.amount })
       }
       break
 
@@ -30,7 +31,7 @@ export default function (state = initialState, action) {
       } else {
         state = {
           items: state.items.filter((item) => {
-            return item.articleId !== payload.articleId
+            return item.article.articleId !== payload.articleId
           })
         }
       }
@@ -39,7 +40,7 @@ export default function (state = initialState, action) {
     case DELETE_ITEM:
       state = {
         items: state.items.filter((item) => {
-          return item.articleId !== payload.articleId
+          return item.article.articleId !== payload.articleId
         })
       }
       break

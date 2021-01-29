@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 
-import { Box, Button, Grid, Paper, Typography, withStyles } from '@material-ui/core'
+import { Box, Button, Divider, Grid, Paper, Typography, withStyles } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import Axios from 'axios'
 
@@ -18,10 +18,10 @@ const styles = theme => ({
   image: {
     maxWidth: '100%',
     [theme.breakpoints.down('sm')]: {
-      maxHeight: 140
+      maxHeight: 100
     },
     [theme.breakpoints.up('sm')]: {
-      maxHeight: 200
+      maxHeight: 150
     }
   },
   info: {
@@ -32,19 +32,19 @@ const styles = theme => ({
   },
   title: {
     display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
-      justifyContent: 'center'
-    },
-    [theme.breakpoints.up('sm')]: {
+    // [theme.breakpoints.down('sm')]: {
+    //   textAlign: 'center',
+    //   justifyContent: 'center'
+    // },
+    [theme.breakpoints.up('xs')]: {
       textAlign: 'left',
       justifyContent: 'flex-start'
     }
   },
   price: {
     display: 'flex',
-    justifyContent: 'flex-end',
-    marginTop: 15,
+    justifyContent: 'left',
+    marginTop: 25,
     paddingRight: 15,
     paddingBottom: 10
   }
@@ -72,9 +72,10 @@ function ArticleListItem (props) {
               <img className={classes.image} src={article.images && article.images[0] ? article.images[0].imageLink : 'https://i.stack.imgur.com/GNhxO.png'}></img>
             </Grid>
             <Grid item xs={12} sm={7} className={classes.info}>
-              <Typography className={classes.title} align="left" variant="h6">{article.name}</Typography>
+              <Typography className={classes.title} variant="h6">{article.name}</Typography>
+              <Divider />
               <Box className={classes.price}>
-              <Typography variant="h6">{article.price ? article.price.toFixed(2).replace('.', ',') + '€' : ''}</Typography>
+                <Typography variant="h6">{article.price ? (article.price / 15).toFixed(2).replace('.', ',') + '€ / day' : ''}</Typography>
               </Box>
             </Grid>
           </Grid>
