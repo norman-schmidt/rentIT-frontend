@@ -33,7 +33,7 @@ function Categories (props) {
             <List>
                 {categories.map((categorie, i) => {
                   return (
-                    <ListItem button key={i} onClick={() => props.history.push('/categories/' + categorie.categoryId)}>
+                    <ListItem button key={i} onClick={() => props.history.push('/categories/' + categorie)}>
                       <ListItemIcon>
                         <SmartphoneIcon />
                       </ListItemIcon>

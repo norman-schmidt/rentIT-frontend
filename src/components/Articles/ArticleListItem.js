@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { Box, Button, Divider, Grid, Paper, Typography, withStyles } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
-import Axios from 'axios'
 
 const styles = theme => ({
   root: {
@@ -52,24 +51,16 @@ const styles = theme => ({
 
 function ArticleListItem (props) {
   const { classes } = props
-  const { articleId } = props
-  const [article, setArticle] = useState({})
+  const { article } = props
+  const articleId = 2
   const history = useHistory()
   // console.log(article)
-
-  useEffect(() => {
-    Axios.get('https://rentit-thb.herokuapp.com/api/articles/' + articleId)
-      .then(res => {
-        console.log(res)
-        setArticle(res.data)
-      })
-  }, [])
 
   return (
         <Paper variant="outlined" square className={classes.root} onClick={() => { history.push('/article/' + articleId) }}>
           <Grid container spacing={3} component={Button} className={classes.gridContainer}>
             <Grid item xs={12} sm={5}>
-              <img className={classes.image} src={article.images && article.images[0] ? article.images[0].imageLink : 'https://i.stack.imgur.com/GNhxO.png'}></img>
+              <img className={classes.image} src={article.imageLink ? article.imageLink : 'https://i.stack.imgur.com/GNhxO.png'}></img>
             </Grid>
             <Grid item xs={12} sm={7} className={classes.info}>
               <Typography className={classes.title} variant="h6">{article.name}</Typography>

@@ -61,7 +61,7 @@ function App() {
               <Switch>
                 <Route exact path="/" component={Home}></Route>
                 <Route exact path="/article/:article_id" component={Article}></Route>
-                <Route path="/categories/:category_id" component={Category}></Route>
+                <Route path="/categories/:category_name" component={Category}></Route>
                 <Route path="/categories" component={Categories}></Route>
                 <Route path="/cart" component={Cart}></Route>
                 <Route path="/search/:search_value" component={Search}></Route>

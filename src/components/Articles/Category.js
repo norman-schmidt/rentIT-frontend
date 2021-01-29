@@ -17,10 +17,10 @@ const styles = theme => ({
 function Category (props) {
   const [category, setCategory] = useState([])
 
-  const categoryId = props.match.params.category_id
+  const categoryName = props.match.params.category_name
 
   useEffect(() => {
-    axios.get('https://rentit-thb.herokuapp.com/api/categories/' + categoryId)
+    axios.get('https://rentit-thb.herokuapp.com/api/categories/name/' + categoryName)
       .then(res => {
         console.log(res)
         setCategory(res.data)
@@ -31,11 +31,11 @@ function Category (props) {
   console.log(category)
   return (
     <div>
-      {category.articles !== undefined
+      {category !== undefined
         ? (
           <Box align="center" mt={3}>
-              {category.articles.map((article, index) => {
-                return <ArticleListItem key={index} articleId={article.articleId}></ArticleListItem>
+              {category.map((article, index) => {
+                return <ArticleListItem key={index} article={article}></ArticleListItem>
               })}
           </Box>
           )
