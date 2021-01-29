@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Typography, Button, makeStyles, Grid } from '@material-ui/core'
 import ArticleListItem from '../Articles/ArticleListItem'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import Axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
   checkoutButton: {
@@ -14,8 +15,22 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = () => {
   const classes = useStyles()
+  const [articles, setArticles] = useState([])
   const cart = useSelector(state => state.cart)
 
+  useEffect(() => {
+    Axios({
+      method: 'GET',
+      // url: 'https://rentit-thb.herokuapp.com/api/articles/articlesByIds/',
+      url: 'https://rentit-thb.herokuapp.com/api/categories/name/TV'
+      // data: {
+      //   ids: cart.items.map((item) => item.article.articleId)
+      // }
+    }).then(res => {
+      console.log(res)
+      setArticles(res.data)
+    })
+  }, [])
   return (
         <div>
             {cart && cart.items.length > 0
@@ -29,11 +44,11 @@ const Cart = () => {
                 </Grid>
               : <div></div>
             }
-            {cart && cart.items.length > 0
-              ? cart.items.map((item, index) => {
+            {articles && articles.length > 0
+              ? articles.map((article, index) => {
                   return (
                     <div key={index}>
-                      <ArticleListItem article={{ name: 'Hallo', price: 100.0, stockLevel: 20, description: 'Nice alter', imageLink: 'https://brain-images-ssl.cdn.dixons.com/2/1/10192712/u_10192712.jpg' }}></ArticleListItem>
+                      <ArticleListItem article={article}></ArticleListItem>
                     </div>
                   )
                 })
