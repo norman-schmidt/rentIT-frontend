@@ -47,7 +47,7 @@ const styles = theme => ({
     width: '75%',
     height: 50
   },
-  amountSelect: {
+  quantitySelect: {
     marginRight: theme.spacing(3),
     marginTop: 20,
     width: '15%',
@@ -61,7 +61,7 @@ function Article (props) {
   const articleId = props.match.params.article_id
 
   const [article, setArticle] = useState({})
-  const [amount, setAmount] = useState(1)
+  const [quantity, setQuantity] = useState(1)
 
   const dispatch = useDispatch()
 
@@ -73,8 +73,8 @@ function Article (props) {
       })
   }, [])
 
-  const handleAmountChange = (event) => {
-    setAmount(event.target.value)
+  const handleQuantityChange = (event) => {
+    setQuantity(event.target.value)
   }
 
   const handleAddToCart = () => {
@@ -82,7 +82,7 @@ function Article (props) {
       type: ADD_ITEM,
       payload: {
         articleId: articleId,
-        amount: amount
+        quantity: quantity
       }
     })
   }
@@ -104,13 +104,13 @@ function Article (props) {
                       <div>
                           <Typography className={classes.price} variant="h4">{article.price.toFixed(2).replace('.', ',')} €</Typography>
 
-                          <FormControl className={classes.amountSelect}>
-                            <InputLabel id="amount-select-label">Amount</InputLabel>
+                          <FormControl className={classes.quantitySelect}>
+                            <InputLabel id="quantity-select-label">Qty.:</InputLabel>
                             <Select
-                              labelId="amount-select-label"
-                              id="amount-select"
-                              value={amount}
-                              onChange={handleAmountChange}
+                              labelId="quantity-select-label"
+                              id="quantity-select"
+                              value={quantity}
+                              onChange={handleQuantityChange}
                             >
                               <MenuItem value={1}>1</MenuItem>
                               <MenuItem value={2}>2</MenuItem>

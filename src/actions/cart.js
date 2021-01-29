@@ -1,10 +1,10 @@
 import { ADD_ITEM, DELETE_ITEM, REMOVE_ITEM } from './types'
 
-export const addItem = (articleId, amount) => ({
+export const addItem = (articleId, quantity) => ({
   type: ADD_ITEM,
   payload: {
     articleId: articleId,
-    amount: amount
+    quantity: quantity
   }
 })
 

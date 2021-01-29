@@ -33,7 +33,7 @@ const Cart = () => {
               ? cart.items.map((item, index) => {
                   return (
                     <div key={index}>
-                      <ArticleListItem articleId={item.article.articleId}></ArticleListItem>
+                      <ArticleListItem article={{ name: 'Hallo', price: 100.0, stockLevel: 20, description: 'Nice alter', imageLink: 'https://brain-images-ssl.cdn.dixons.com/2/1/10192712/u_10192712.jpg' }}></ArticleListItem>
                     </div>
                   )
                 })

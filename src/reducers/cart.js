@@ -19,15 +19,15 @@ export default function (state = initialState, action) {
   switch (type) {
     case ADD_ITEM:
       if (itemIndex > -1) {
-        state.items[itemIndex].amount += payload.amount
+        state.items[itemIndex].quantity += payload.quantity
       } else {
-        state.items.push({ article: { articleId: payload.articleId }, amount: payload.amount })
+        state.items.push({ article: { articleId: payload.articleId }, quantity: payload.quantity })
       }
       break
 
     case REMOVE_ITEM:
-      if (itemIndex > -1 && state.items[itemIndex].amount > 1) {
-        state.items[itemIndex].amount--
+      if (itemIndex > -1 && state.items[itemIndex].quantity > 1) {
+        state.items[itemIndex].quantity--
       } else {
         state = {
           items: state.items.filter((item) => {
