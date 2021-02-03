@@ -12,7 +12,7 @@ import {
 import { AccountCircle } from '@material-ui/icons'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 // import { useSnackbar } from 'notistack'
 
@@ -64,6 +64,7 @@ export default function SignUp (props) {
   const [pwdError, setPwdError] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const { isLoggedIn } = useSelector(state => state.auth)
   const { message } = useSelector((state) => state.message)
   const dispatch = useDispatch()
 
@@ -88,6 +89,10 @@ export default function SignUp (props) {
       type: CLEAR_MESSAGE
     })
   }, [])
+
+  if (isLoggedIn) {
+    return <Redirect to="/dashboard" />
+  }
 
   return (
     <Container component='main' maxWidth='xs'>

@@ -4,13 +4,12 @@ import axios from 'axios'
 
 import { useDispatch } from 'react-redux'
 
-import { withStyles } from '@material-ui/core/styles'
-import { Container, Grid, Button, Typography, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { Container, Grid, Button, Typography, FormControl, InputLabel, Select, MenuItem, makeStyles } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import { ADD_ITEM } from '../../actions/types'
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
   article: {
     padding: '25px 50px 100px 50px',
     [theme.breakpoints.down('md')]: {
@@ -31,7 +30,11 @@ const styles = theme => ({
     }
   },
   information: {
-    paddingLeft: 30
+    [theme.breakpoints.up('md')]: {
+      paddingLeft: 30,
+      paddingTop: 40
+    },
+    paddingTop: 0
   },
   moreInformation: {
     paddingTop: 40
@@ -53,12 +56,11 @@ const styles = theme => ({
     width: '15%',
     height: 40
   }
-})
+}))
 
 function Article (props) {
-  const { classes } = props
-
-  const articleId = props.match.params.article_id
+  const classes = useStyles()
+  const articleId = parseInt(props.match.params.article_id)
 
   const [article, setArticle] = useState({})
   const [quantity, setQuantity] = useState(1)
@@ -68,7 +70,7 @@ function Article (props) {
   useEffect(() => {
     axios.get('https://rentit-thb.herokuapp.com/api/articles/' + articleId)
       .then(res => {
-        console.log(res)
+        console.log(res.data)
         setArticle(res.data)
       })
   }, [])
@@ -103,37 +105,44 @@ function Article (props) {
                       </div>
                       <div>
                           <Typography className={classes.price} variant="h4">{article.price.toFixed(2).replace('.', ',')} €</Typography>
+                          {article.stockLevel > 0 > 0
+                            ? <div>
+                                <FormControl className={classes.quantitySelect}>
+                                  <InputLabel id="quantity-select-label">Qty.:</InputLabel>
+                                  <Select
+                                    labelId="quantity-select-label"
+                                    id="quantity-select"
+                                    value={quantity}
+                                    onChange={handleQuantityChange}
+                                  >
+                                    {new Array(article.stockLevel).fill(0).map((v, i) => {
+                                      return (
+                                        <MenuItem key={i} value={(i + 1)}>{(i + 1)}</MenuItem>
+                                      )
+                                    })}
+                                  </Select>
+                                </FormControl>
 
-                          <FormControl className={classes.quantitySelect}>
-                            <InputLabel id="quantity-select-label">Qty.:</InputLabel>
-                            <Select
-                              labelId="quantity-select-label"
-                              id="quantity-select"
-                              value={quantity}
-                              onChange={handleQuantityChange}
-                            >
-                              <MenuItem value={1}>1</MenuItem>
-                              <MenuItem value={2}>2</MenuItem>
-                              <MenuItem value={3}>3</MenuItem>
-                              <MenuItem value={4}>4</MenuItem>
-                              <MenuItem value={5}>5</MenuItem>
-                              <MenuItem value={6}>6</MenuItem>
-                              <MenuItem value={7}>7</MenuItem>
-                              <MenuItem value={8}>8</MenuItem>
-                              <MenuItem value={9}>9</MenuItem>
-                              <MenuItem value={10}>10</MenuItem>
-                            </Select>
-                          </FormControl>
-
-                          <Button
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.priceButton}
+                                    endIcon={<ShoppingCartIcon />}
+                                    onClick={handleAddToCart}
+                                >
+                                    Add to cart
+                                </Button>
+                              </div>
+                            : <Button
+                              disabled={true}
                               variant="contained"
-                              color="primary"
+                              color="disabled"
                               className={classes.priceButton}
                               endIcon={<ShoppingCartIcon />}
-                              onClick={handleAddToCart}
-                          >
-                              Add to cart
-                          </Button>
+                              >
+                                  Currently out of stock
+                              </Button>
+                          }
                         </div>
                   </Grid>
                   <Grid item xs={12} className={classes.moreInformation}>
@@ -165,4 +174,4 @@ function Article (props) {
   )
 }
 
-export default withStyles(styles, { withTheme: true })(Article)
+export default Article

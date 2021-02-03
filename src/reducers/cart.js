@@ -1,5 +1,5 @@
 /* eslint-disable default-param-last */
-import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM } from '../actions/types'
+import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM, CHANGE_DATE, CHANGE_QUANTITY } from '../actions/types'
 
 const initialState = JSON.parse(localStorage.getItem('cartItems')) ?? { items: [] }
 
@@ -21,7 +21,19 @@ export default function (state = initialState, action) {
       if (itemIndex > -1) {
         state.items[itemIndex].quantity += payload.quantity
       } else {
-        state.items.push({ article: { articleId: payload.articleId }, quantity: payload.quantity })
+        state.items.push({ article: { articleId: payload.articleId }, quantity: payload.quantity, returnDate: new Date(new Date().getTime() + 604800000) })
+      }
+      break
+
+    case CHANGE_QUANTITY:
+      if (itemIndex > -1) {
+        state.items[itemIndex].quantity = payload.quantity
+      }
+      break
+
+    case CHANGE_DATE:
+      if (itemIndex > -1) {
+        state.items[itemIndex].returnDate = payload.returnDate
       }
       break
 

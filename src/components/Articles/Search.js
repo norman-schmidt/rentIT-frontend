@@ -3,18 +3,18 @@ import React, { useEffect, useState } from 'react'
 
 import ArticleListItem from './ArticleListItem'
 
-import { Box, Typography, withStyles } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 
 // import { connect } from 'react-redux'
 // import { search } from '../actions/searchAction'
 
 import axios from 'axios'
 
-const styles = theme => ({
-})
+// const useStyles = makeStyles((theme) => ({
+// }))
 
 function Search (props) {
-  // const { classes } = props
+  // const classes = useStyles()
 
   const searchValue = props.match.params.search_value
 
@@ -22,7 +22,7 @@ function Search (props) {
   useEffect(() => {
     axios.get('https://rentit-thb.herokuapp.com/api/articles/')
       .then(res => {
-        console.log(res)
+        console.log(res.data)
         setArticles(res.data)
       })
   }, [])
@@ -68,4 +68,4 @@ function Search (props) {
 // }
 
 // export default withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Search))
-export default withStyles(styles, { withTheme: true })(Search)
+export default Search

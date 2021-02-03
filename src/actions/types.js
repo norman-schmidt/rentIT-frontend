@@ -8,5 +8,7 @@ export const SET_MESSAGE = 'SET_MESSAGE'
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE'
 
 export const ADD_ITEM = 'ADD_ITEM'
+export const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
+export const CHANGE_DATE = 'CHANGE_DATE'
 export const REMOVE_ITEM = 'REMOVE_ITEM'
 export const DELETE_ITEM = 'DELETE_ITEM'

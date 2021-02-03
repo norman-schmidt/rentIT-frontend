@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Login (props) {
+function Login (props) {
   const classes = useStyles()
   // const { enqueueSnackbar } = useSnackbar()
 
@@ -144,3 +144,5 @@ export default function Login (props) {
     </Container>
   )
 }
+
+export default Login

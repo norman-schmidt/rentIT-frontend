@@ -32,16 +32,11 @@ export default class Profile extends Component {
           {currentUser
             ? (
               <div>
-                  <h2 align="center">Profile for {currentUser.username} :</h2>
+                  <h2 align="center">Profile for {currentUser.firstname} :</h2>
 
                   <div>
                   <span>Images:</span>
                   {currentUser.images}
-                  </div>
-
-                  <div>
-                  <span>Username:</span>
-                  {currentUser.username}
                   </div>
 
                   <div>
@@ -61,12 +56,12 @@ export default class Profile extends Component {
 
                   <div>
                   <span>Address:</span>
-                  {currentUser.username}
+                  {currentUser.firstname}
                   </div>
 
                   <div>
                   <span>Rentals:</span>
-                  {currentUser.username}
+                  {currentUser.firstname}
                   </div>
 
                   <div>

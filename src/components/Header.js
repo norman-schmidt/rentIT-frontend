@@ -12,12 +12,12 @@ import SearchIcon from '@material-ui/icons/Search'
 import { AccountCircle } from '@material-ui/icons'
 
 import { useHistory, Link } from 'react-router-dom'
-
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 // import { connect } from 'react-redux'
 // import { search } from '../actions/searchAction'
 
+import { logout } from '../actions/auth'
 import AuthService from '../services/auth-service'
 import { Avatar } from '@material-ui/core'
 
@@ -77,15 +77,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const logout = () => {
-  AuthService.logout()
-}
-
 function Header (props) {
   const classes = useStyles()
   const { searchValue } = props
   const history = useHistory()
   const { isLoggedIn } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
 
   const user = AuthService.getCurrentUser()
   console.log(user)
@@ -134,7 +131,7 @@ function Header (props) {
 
           {isLoggedIn
             ? (
-              <Avatar className={classes.account} onClick={logout}>{user.username.charAt(0).toUpperCase()}</Avatar>
+              <Avatar className={classes.account} onClick={() => { logout(dispatch); history.push('/') }}>{user.firstname.charAt(0).toUpperCase()}</Avatar>
               )
             : (
               <IconButton className={classes.account} component={Link} to='/login' aria-label="login">

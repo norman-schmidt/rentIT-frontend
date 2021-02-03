@@ -2,17 +2,16 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { withStyles } from '@material-ui/core/styles'
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core'
 import SmartphoneIcon from '@material-ui/icons/Smartphone'
 import Skeleton from '@material-ui/lab/Skeleton'
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
   skeleton: {
     margin: theme.spacing(2),
     height: 50
   }
-})
+}))
 
 function Categories (props) {
   const [categories, setCategories] = useState([])
@@ -20,12 +19,12 @@ function Categories (props) {
   useEffect(() => {
     axios.get('https://rentit-thb.herokuapp.com/api/categories/name/')
       .then(res => {
-        console.log(res)
+        console.log(res.data)
         setCategories(res.data)
       })
   }, [])
 
-  const { classes } = props
+  const classes = useStyles()
   return (
     <div>
       {categories.length
@@ -57,4 +56,4 @@ function Categories (props) {
   )
 }
 
-export default withStyles(styles, { withTheme: true })(Categories)
+export default Categories

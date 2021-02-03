@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 
-import { Box, Button, Divider, Grid, Paper, Typography, withStyles } from '@material-ui/core'
+import { Box, Button, Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: -1,
     padding: 10,
@@ -47,17 +47,16 @@ const styles = theme => ({
     paddingRight: 15,
     paddingBottom: 10
   }
-})
+}))
 
 function ArticleListItem (props) {
-  const { classes } = props
+  const classes = useStyles()
   const { article } = props
-  const articleId = 2
   const history = useHistory()
   // console.log(article)
 
   return (
-        <Paper variant="outlined" square className={classes.root} onClick={() => { history.push('/article/' + articleId) }}>
+        <Paper variant="outlined" className={classes.root} onClick={() => { history.push('/article/' + article.id) }}>
           <Grid container spacing={3} component={Button} className={classes.gridContainer}>
             <Grid item xs={12} sm={5}>
               <img className={classes.image} src={article.imageLink ? article.imageLink : 'https://i.stack.imgur.com/GNhxO.png'}></img>
@@ -74,4 +73,4 @@ function ArticleListItem (props) {
   )
 }
 
-export default withStyles(styles, { withTheme: true })(ArticleListItem)
+export default ArticleListItem
