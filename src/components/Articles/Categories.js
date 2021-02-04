@@ -23,7 +23,6 @@ function Categories (props) {
         setCategories(res.data)
       })
   }, [])
-
   const classes = useStyles()
   return (
     <div>

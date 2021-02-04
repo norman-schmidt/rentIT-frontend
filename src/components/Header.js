@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { makeStyles, fade } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -10,6 +10,8 @@ import InputBase from '@material-ui/core/InputBase'
 import LaptopChromebook from '@material-ui/icons/LaptopChromebook'
 import SearchIcon from '@material-ui/icons/Search'
 import { AccountCircle } from '@material-ui/icons'
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
 import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { logout } from '../actions/auth'
 import AuthService from '../services/auth-service'
-import { Avatar } from '@material-ui/core'
+import { Avatar, ListItemIcon, Menu, MenuItem } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -81,11 +83,14 @@ function Header (props) {
   const classes = useStyles()
   const { searchValue } = props
   const history = useHistory()
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [user, setUser] = React.useState({})
   const { isLoggedIn } = useSelector(state => state.auth)
   const dispatch = useDispatch()
 
-  const user = AuthService.getCurrentUser()
-  console.log(user)
+  useEffect(() => {
+    setUser(AuthService.getCurrentUser())
+  }, [isLoggedIn])
 
   return (
     <div className={classes.header}>
@@ -131,7 +136,33 @@ function Header (props) {
 
           {isLoggedIn
             ? (
-              <Avatar className={classes.account} onClick={() => { logout(dispatch); history.push('/') }}>{user && user.firstname ? user.firstname.charAt(0).toUpperCase() : ''}</Avatar>
+              <div>
+                <Avatar className={classes.account} onClick={(event) => { setAnchorEl(event.currentTarget) }} >{user && user.firstname ? user.firstname.charAt(0).toUpperCase() : ''}</Avatar>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={() => { setAnchorEl(null) }}
+                >
+                  <MenuItem onClick={() => { history.push('/dashboard/'); setAnchorEl(null) }}>
+                    <ListItemIcon>
+                      <DashboardIcon fontSize="small" />
+                    </ListItemIcon>
+                    Dashboard
+                  </MenuItem>
+                  <MenuItem onClick={() => { history.push('/profile/'); setAnchorEl(null) }}>
+                    <ListItemIcon>
+                      <AccountCircle fontSize="small" />
+                    </ListItemIcon>
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={() => { logout(dispatch); history.push('/'); setAnchorEl(null) }}>
+                    <ListItemIcon>
+                      <ExitToAppIcon fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </div>
               )
             : (
               <IconButton className={classes.account} component={Link} to='/login' aria-label="login">

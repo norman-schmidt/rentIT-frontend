@@ -4,7 +4,6 @@ import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM, CHANGE_QUANTITY, CLEAR_CART, CHANGE
 const initialState = JSON.parse(localStorage.getItem('cartItems')) ?? { items: [] }
 
 export default function (state = initialState, action) {
-  console.log(state)
   if (action === undefined) return state
 
   const { type, payload } = action

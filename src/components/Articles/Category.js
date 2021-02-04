@@ -14,10 +14,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Category (props) {
+  const classes = useStyles()
   const [category, setCategory] = useState([])
 
   const categoryName = props.match.params.category_name
-
+  console.log(categoryName)
   useEffect(() => {
     axios.get('https://rentit-thb.herokuapp.com/api/categories/name/' + categoryName)
       .then(res => {
@@ -26,8 +27,6 @@ function Category (props) {
       })
   }, [])
 
-  const classes = useStyles()
-  console.log(category)
   return (
     <div>
       {category !== undefined
