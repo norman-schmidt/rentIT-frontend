@@ -10,7 +10,6 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import { ADD_ITEM } from '../../actions/types'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import differenceInDays from 'date-fns/differenceInDays'
 
 const useStyles = makeStyles((theme) => ({
   article: {
@@ -39,14 +38,23 @@ const useStyles = makeStyles((theme) => ({
     },
     paddingTop: 0
   },
-  moreInformation: {
+  bottomArea: {
     paddingTop: 40
+  },
+  moreInformation: {
+
+  },
+  dateText: {
+    paddingLeft: 20
   },
   description: {
     marginBottom: 40
   },
-  table: {
-
+  datePicker: {
+    marginTop: 60
+  },
+  badge: {
+    fontSize: '0.4em'
   },
   metaInfo: {
     paddingTop: 15
@@ -71,8 +79,8 @@ function Article (props) {
   const classes = useStyles()
   const articleId = parseInt(props.match.params.article_id)
   const [article, setArticle] = useState({})
-  const [quantity, setQuantity] = useState(1)
-  const [availabilityInMonth, setAvailabilityInMonth] = useState({})
+  const [quantity, setQuantity] = useState(1) // chosen quantity
+  const [availabilityInMonth, setAvailabilityInMonth] = useState({}) // available article per day per month
   const [selectedDate, handleDateChange] = useState(new Date())
   let inCart = 0
   let availableQuantity = 0
@@ -98,7 +106,7 @@ function Article (props) {
         console.log(res.data)
         setArticle(res.data)
       })
-    axios.get('https://rentit-thb.herokuapp.com/api/articles/availableQuantity?id=' + articleId + '&month=' + (new Date()).getMonth() + 1)
+    axios.get('https://rentit-thb.herokuapp.com/api/articles/availableQuantity?id=' + articleId + '&month=' + ((new Date()).getMonth() + 1))
       .then(res => {
         console.log(res.data)
         setAvailabilityInMonth(res.data)
@@ -159,8 +167,8 @@ function Article (props) {
                                       )
                                     })}
                                   </Select>
-                                </FormControl>
                                   {inCart}x in cart
+                                </FormControl>
                                 <Button
                                     variant="contained"
                                     color="primary"
@@ -189,23 +197,23 @@ function Article (props) {
                     justify="center"
                     alignItems="flex-start"
                     item xs={12}
+                    className={classes.bottomArea}
                   >
-                    <Grid item xs={12} sm={6} className={classes.datePicker} align='center'>
-                      Select your Rental Date
+                    <Grid item xs={12} sm={6} align='left:'>
+                      <Typography className={classes.dateText}>Select your Rental Date:</Typography>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <DatePicker
+                          className={classes.datePicker}
                           autoOk
-                          orientation="portrait"
+                          disablePast
+                          disableToolbar
                           variant="static"
                           openTo="date"
                           value={selectedDate}
                           onChange={handleDateChange}
                           onMonthChange={handleMonthChange}
                           renderDay={(day, selectedDate, isInCurrentMonth, dayComponent) => {
-                            console.log(day.getDate())
-                            const dif = differenceInDays(day, new Date())
-                            console.log(availabilityInMonth)
-                            return <Badge badgeContent={dif && availabilityInMonth > 0 ? availabilityInMonth.available[dif] : undefined}>{dayComponent}</Badge>
+                            return <Badge color='secondary' classNam={classes.badge} badgeContent={availabilityInMonth.available && isInCurrentMonth && day.getYear() === (new Date()).getYear() ? availabilityInMonth.available[day.getDate() - 1] : undefined}>{dayComponent}</Badge>
                           }}
                         />
                       </MuiPickersUtilsProvider>

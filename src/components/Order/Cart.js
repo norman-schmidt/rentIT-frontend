@@ -57,7 +57,7 @@ const Cart = () => {
 
   let cart = {}
   const calculateTotal = () => {
-    if (cart && articles.length > 0) {
+    if (cart && cart.items && articles.length > 0) {
       let sum = 0
       cart.items.forEach((item, index) => {
         // console.log(articles[index].price + ' * ' + item.quantity + ' * ' + new Date(item.rentalDate) + ' - ' + item.returnDate + ' = ' + differenceInDays(new Date(item.returnDate), new Date(item.rentalDate)))

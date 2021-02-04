@@ -1,4 +1,5 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
@@ -6,42 +7,58 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 
-import { Link } from 'react-router-dom'
+import Axios from 'axios'
 
 const useStyles = makeStyles({
   root: {
     paddingTop: 16
   },
   card: {
-    width: '80%'
+    width: '80%',
+    marginTop: 30
   },
   media: {
-    height: 240
+    height: 200
   }
 })
 
-function Home () {
+function Home (props) {
   const classes = useStyles()
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    Axios.get('https://rentit-thb.herokuapp.com/api/categories/name/')
+      .then(res => {
+        console.log(res.data)
+        setCategories(res.data)
+      })
+  }, [])
+
   return (
     <div className={classes.root} align="center">
-      <Card className={classes.card}>
-        <CardActionArea component={Link} to="/article/1">
-          <CardMedia
-            className={classes.media}
-            image="https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_76979761/fee_786_587_png"
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h6" component="h6">
-              SAMSUNG Galaxy Fold 2 256 GB Mystic Black
-          </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-              across all continents except Antarctica
-          </Typography>
-          </CardContent>
-        </CardActionArea>
-      </Card>
+      <Typography variant="h4" align="center" paragraph>Willkommen bei RentIT</Typography>
+      <Typography variant="subtitle1" align="center" paragraph>Ihr Ort um IT-Geräte bequem auszuleihen.</Typography>
+
+      {categories.map((categorie, i) => {
+        return (
+          <Card key={i} className={classes.card}>
+            <CardActionArea onClick={() => props.history.push('/categories/' + categorie)}>
+              <CardMedia
+                className={classes.media}
+                image="https://mediacloud.kiplinger.com/image/private/s--r6zIX9Es--/v1602874257/Investing/small-cap-tech-stocks.jpg"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h6" component="h6">
+                  {categorie.toUpperCase()}
+              </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+
+              </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        )
+      })}
     </div>
   )
 }
