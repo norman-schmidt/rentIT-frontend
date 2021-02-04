@@ -15,6 +15,7 @@ import Axios from 'axios'
 import { CHANGE_RENTALDATE, CHANGE_QUANTITY, CHANGE_RETURNDATE, CLEAR_CART } from '../../actions/types'
 import Skeleton from '@material-ui/lab/Skeleton'
 import authHeader from '../../services/auth-header'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   checkoutButton: {
@@ -36,6 +37,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = () => {
   const classes = useStyles()
+  const { isLoggedIn } = useSelector(state => state.auth)
+  const history = useHistory()
   const [open, setOpen] = useState(false)
   const [articles, setArticles] = useState([])
   const [total, setTotal] = useState(0)
@@ -45,7 +48,7 @@ const Cart = () => {
     if (cart && articles.length > 0) {
       let sum = 0
       cart.items.forEach((item, index) => {
-        console.log(articles[index].price + ' * ' + item.quantity + ' * ' + new Date(item.rentalDate) + ' - ' + item.returnDate + ' = ' + differenceInDays(new Date(item.returnDate), new Date(item.rentalDate)))
+        // console.log(articles[index].price + ' * ' + item.quantity + ' * ' + new Date(item.rentalDate) + ' - ' + item.returnDate + ' = ' + differenceInDays(new Date(item.returnDate), new Date(item.rentalDate)))
         sum += articles[index].price * item.quantity * (differenceInDays(new Date(item.returnDate), new Date(item.rentalDate)))
       })
       setTotal(sum)
@@ -127,24 +130,47 @@ const Cart = () => {
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Button className={classes.checkoutButton} onClick={() => setOpen(true)} variant="contained" color="primary"endIcon={<ArrowForwardIosIcon />}>Proceed to Checkout</Button>
-                      <Dialog
-                        fullWidth={true}
-                        maxWidth='sm'
-                        open={open}
-                        onClose={() => setOpen(false)}
-                      >
-                        <DialogTitle id="confirmation-dialog">Ready to rent?</DialogTitle>
-                        <DialogContent>
-                          <DialogContentText>
-                            You will rent {cart.length} and pay a total of {total}€.
-                          </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button onClick={() => { rent(); setOpen(false) }} color="primary">
-                            Rent Now
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
+                      {isLoggedIn
+                        ? <Dialog
+                            fullWidth={true}
+                            maxWidth='sm'
+                            open={open}
+                            onClose={() => setOpen(false)}
+                          >
+                            <DialogTitle id="confirmation-dialog">Ready to rent?</DialogTitle>
+                            <DialogContent>
+                              <DialogContentText>
+                                You will rent {cart.length} and pay a total of {total}€.
+                              </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button onClick={() => { rent(); setOpen(false) }} color="primary">
+                                Rent Now
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
+                        : <Dialog
+                            fullWidth={true}
+                            maxWidth='sm'
+                            open={open}
+                            onClose={() => setOpen(false)}
+                          >
+                            <DialogTitle id="confirmation-dialog">Please log in or register to rent your articles.</DialogTitle>
+                            <DialogContent>
+                              <DialogContentText>
+                               You need an account to rent your articles from RENTIT24. 👾
+                              </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button onClick={() => { history.push('/login') }} color="primary">
+                                Login
+                              </Button>
+                              <Button onClick={() => { history.push('/register') }} color="primary">
+                                Register
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
+                      }
                     </Grid>
                   </Grid>
                   {articles && articles.length > 0
