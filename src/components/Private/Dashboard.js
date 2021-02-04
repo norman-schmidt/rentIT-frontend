@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button, Grid, makeStyles, Typography } from '@material-ui/core'
+import { Button, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
 import Axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import AuthService from '../../services/auth-service'
@@ -80,34 +80,37 @@ function Dashboard () {
                     </Grid>
                     {rentedArticles.map((article, index) => {
                       return (
-                        <Grid container key={index} spacing={2} alignItems='center' justify='center' align='center'>
-                          <Grid item xs={6} md={2}>
-                            <img src={article.imageLink} height='auto' width='100%'/>
+                        <div key={index}>
+                          <Grid container spacing={2} alignItems='center' justify='center' align='center'>
+                            <Grid item xs={6} md={2}>
+                              <img src={article.imageLink} height='auto' width='100%'/>
+                            </Grid>
+                            <Grid item xs={6} md={2}>
+                              <Typography variant='body1' paragraph>{article.name}</Typography>
+                              <Typography variant='body2' >{article.description}</Typography>
+                            </Grid>
+                            <Grid item xs={4} md={1}>
+                              <Typography variant='body2' >{article.quantity}</Typography>
+                            </Grid>
+                            <Grid item xs={4} md={2}>
+                              <Typography variant='body2' >{article.rent_date.substr(0, 10).replaceAll('-', '.')}</Typography>
+                            </Grid>
+                            <Grid item xs={4} md={1}>
+                              <Typography variant='body2' >{article.return_date ? article.return_date.substr(0, 10).replaceAll('-', '.') : '-'}</Typography>
+                            </Grid>
+                            <Grid item xs={6} md={2}>
+                              <Button variant="contained" color='primary'>
+                                Extend
+                              </Button>
+                            </Grid>
+                            <Grid item xs={6} md={1}>
+                              <Button variant="contained" color='secondary' onClick={() => handleReturn(article.article_quantityId)}>
+                                Return
+                              </Button>
+                            </Grid>
                           </Grid>
-                          <Grid item xs={6} md={2}>
-                            <Typography variant='body1' paragraph>{article.name}</Typography>
-                            <Typography variant='body2' >{article.description}</Typography>
-                          </Grid>
-                          <Grid item xs={4} md={1}>
-                            <Typography variant='body2' >{article.quantity}</Typography>
-                          </Grid>
-                          <Grid item xs={4} md={2}>
-                            <Typography variant='body2' >{article.rent_date.substr(0, 10).replaceAll('-', '.')}</Typography>
-                          </Grid>
-                          <Grid item xs={4} md={1}>
-                            <Typography variant='body2' >{article.return_date ? article.return_date.substr(0, 10).replaceAll('-', '.') : '-'}</Typography>
-                          </Grid>
-                          <Grid item xs={6} md={2}>
-                            <Button variant="contained" color='primary'>
-                              Extend
-                            </Button>
-                          </Grid>
-                          <Grid item xs={6} md={1}>
-                            <Button variant="contained" color='secondary' onClick={() => handleReturn(article.article_quantityId)}>
-                              Return
-                            </Button>
-                          </Grid>
-                        </Grid>
+                          <Divider></Divider>
+                        </div>
                       )
                     })}
                   </div>

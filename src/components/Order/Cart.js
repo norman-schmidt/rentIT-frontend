@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import ArticleListItem from '../Articles/ArticleListItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { Typography, Button, makeStyles, Grid, MenuItem, Select, InputLabel, FormControl, Paper } from '@material-ui/core'
+import { Typography, Button, makeStyles, Grid, MenuItem, Select, InputLabel, FormControl, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns'
+import differenceInDays from 'date-fns/differenceInDays'
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import Axios from 'axios'
-import { CHANGE_DATE, CHANGE_QUANTITY } from '../../actions/types'
+import { CHANGE_DATE, CHANGE_QUANTITY, CLEAR_CART } from '../../actions/types'
 import Skeleton from '@material-ui/lab/Skeleton'
+import authHeader from '../../services/auth-header'
 
 const useStyles = makeStyles((theme) => ({
   checkoutButton: {
@@ -32,9 +34,26 @@ const useStyles = makeStyles((theme) => ({
 
 const Cart = () => {
   const classes = useStyles()
+  const [open, setOpen] = useState(false)
   const [articles, setArticles] = useState([])
-  const cart = useSelector(state => state.cart)
-  const [dates, setDates] = useState(cart.items.map((item) => item.returnDate))
+  const [total, setTotal] = useState(0)
+
+  var cart
+  const calculateTotal = () => {
+    if (cart && articles.length > 0) {
+      let sum = 0
+      cart.items.forEach((item, index) => {
+        // console.log(articles[index].price + ' * ' + item.quantity + ' * ' + new Date() + ' - ' + item.returnDate + ' = ' + differenceInDays(new Date(item.returnDate), new Date()))
+        sum += articles[index].price * item.quantity * (differenceInDays(new Date(item.returnDate), new Date()) + 1)
+      })
+      setTotal(sum)
+    }
+  }
+  cart = useSelector(state => {
+    calculateTotal()
+    return state.cart
+  })
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -45,10 +64,26 @@ const Cart = () => {
         ids: cart.items.map((item) => item.article.articleId)
       }
     }).then(res => {
-      console.log(res.data)
       setArticles(res.data)
     })
   }, [])
+
+  useEffect(calculateTotal, [articles])
+
+  const rent = () => {
+    console.log(cart.items)
+    Axios({
+      method: 'POST',
+      url: 'https://rentit-thb.herokuapp.com/api/quantities/',
+      data: cart.items,
+      headers: authHeader()
+    }).then(res => {
+      console.log(res.data)
+      dispatch({
+        type: CLEAR_CART
+      })
+    })
+  }
 
   const handleQuantityChange = (articleId, event) => {
     dispatch({
@@ -60,8 +95,7 @@ const Cart = () => {
     })
   }
 
-  const handleDateChange = (articleId, newDate, index) => {
-    console.log(newDate)
+  const handleDateChange = (articleId, newDate) => {
     dispatch({
       type: CHANGE_DATE,
       payload: {
@@ -69,9 +103,6 @@ const Cart = () => {
         returnDate: newDate
       }
     })
-    console.log(cart.items[0].returnDate)
-    dates[index] = cart.items[index].returnDate
-    setDates(dates)
   }
 
   return (
@@ -80,10 +111,28 @@ const Cart = () => {
               ? <div>
                   <Grid container justify="center" alignItems="center">
                     <Grid item xs={12} md={6} align="center">
-                      <Typography variant='h5'>Total: </Typography>
+                      <Typography variant='h5'>Total: {total}€</Typography>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                      <Button className={classes.checkoutButton} variant="contained" color="primary"endIcon={<ArrowForwardIosIcon />}>Proceed to Checkout</Button>
+                      <Button className={classes.checkoutButton} onClick={() => setOpen(true)} variant="contained" color="primary"endIcon={<ArrowForwardIosIcon />}>Proceed to Checkout</Button>
+                      <Dialog
+                        fullWidth={true}
+                        maxWidth='sm'
+                        open={open}
+                        onClose={() => setOpen(false)}
+                      >
+                        <DialogTitle id="confirmation-dialog">Ready to rent?</DialogTitle>
+                        <DialogContent>
+                          <DialogContentText>
+                            You will rent {cart.length} and pay a total of {total}€.
+                          </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={() => { rent(); setOpen(false) }} color="primary">
+                            Rent Now
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
                     </Grid>
                   </Grid>
                   {articles && articles.length > 0
@@ -112,12 +161,17 @@ const Cart = () => {
                                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                       <KeyboardDatePicker
                                         disableToolbar
+                                        disablePast
+                                        shouldDisableDate={(date) => {
+                                          const now = new Date()
+                                          return date.getDate() === now.getDate()
+                                        }}
                                         variant="inline"
                                         format="dd/MM/yyyy"
                                         id="date-picker-inline"
                                         label="Date picker inline"
-                                        value={dates[index]}
-                                        onChange={(newDate) => { handleDateChange(article.id, newDate, index) }}
+                                        value={cart.items[index].returnDate}
+                                        onChange={(newDate) => { handleDateChange(article.id, newDate) }}
                                         KeyboardButtonProps={{
                                           'aria-label': 'change date'
                                         }}

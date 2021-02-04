@@ -1,5 +1,5 @@
 /* eslint-disable default-param-last */
-import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM, CHANGE_DATE, CHANGE_QUANTITY } from '../actions/types'
+import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM, CHANGE_DATE, CHANGE_QUANTITY, CLEAR_CART } from '../actions/types'
 
 const initialState = JSON.parse(localStorage.getItem('cartItems')) ?? { items: [] }
 
@@ -55,6 +55,10 @@ export default function (state = initialState, action) {
           return item.article.articleId !== payload.articleId
         })
       }
+      break
+
+    case CLEAR_CART:
+      state = { items: [] }
       break
 
     default:

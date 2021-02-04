@@ -118,11 +118,11 @@ function Header (props) {
                   root: classes.inputRoot,
                   input: classes.inputInput
                 }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    history.push('/search/' + e.target.value)
-                    console.log(history)
-                  }
+                onKeyUp={(e) => {
+                  // if (e.key === 'Enter') {
+                  history.push('/search/' + e.target.value)
+                  console.log(history)
+                  // }
                 }}
                 inputProps={{ 'aria-label': 'search' }}
                 />

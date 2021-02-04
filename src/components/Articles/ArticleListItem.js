@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 
-import { Box, Button, Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
+import { Box, Divider, Grid, makeStyles, Paper, Typography } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -57,7 +57,7 @@ function ArticleListItem (props) {
 
   return (
         <Paper variant="outlined" className={classes.root} onClick={() => { history.push('/article/' + article.id) }}>
-          <Grid container spacing={3} component={Button} className={classes.gridContainer}>
+          <Grid container spacing={3} className={classes.gridContainer}>
             <Grid item xs={12} sm={5}>
               <img className={classes.image} src={article.imageLink ? article.imageLink : 'https://i.stack.imgur.com/GNhxO.png'}></img>
             </Grid>
@@ -65,7 +65,7 @@ function ArticleListItem (props) {
               <Typography className={classes.title} variant="h6">{article.name}</Typography>
               <Divider />
               <Box className={classes.price}>
-                <Typography variant="h6">{article.price ? (article.price / 15).toFixed(2).replace('.', ',') + '€ / day' : ''}</Typography>
+                <Typography variant="body1">{article.price ? article.price.toFixed(2).replace('.', ',') + '€ / day' : ''}</Typography>
               </Box>
             </Grid>
           </Grid>

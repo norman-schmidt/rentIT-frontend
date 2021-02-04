@@ -1,4 +1,4 @@
-import { ADD_ITEM, DELETE_ITEM, REMOVE_ITEM, CHANGE_DATE, CHANGE_QUANTITY } from './types'
+import { ADD_ITEM, DELETE_ITEM, REMOVE_ITEM, CHANGE_DATE, CHANGE_QUANTITY, CLEAR_CART } from './types'
 
 export const addItem = (articleId, quantity) => ({
   type: ADD_ITEM,
@@ -32,4 +32,8 @@ export const removeItem = (articleId) => ({
 export const deleteItem = (articleId) => ({
   type: DELETE_ITEM,
   payload: { articleId: articleId }
+})
+
+export const clearCart = (articleId) => ({
+  type: CLEAR_CART
 })

@@ -3,69 +3,114 @@ import React, { useEffect, useState } from 'react'
 
 import ArticleListItem from './ArticleListItem'
 
-import { Box, Typography } from '@material-ui/core'
-
-// import { connect } from 'react-redux'
-// import { search } from '../actions/searchAction'
+import { Box, Container, FormControl, Input, InputAdornment, InputLabel, makeStyles, MenuItem, Select, Typography } from '@material-ui/core'
 
 import axios from 'axios'
 
-// const useStyles = makeStyles((theme) => ({
-// }))
+const useStyles = makeStyles((theme) => ({
+  filter: {
+    margin: '20px 0',
+    display: 'flex'
+  },
+  filterItem: {
+    margin: '0 5px',
+    width: 200
+  },
+  categoryFilterItem: {
+    margin: '0 5px',
+    width: 250
+  },
+  infoText: {
+    margin: '30px 0'
+  }
+}))
 
 function Search (props) {
-  // const classes = useStyles()
+  const classes = useStyles()
 
   const searchValue = props.match.params.search_value
 
   const [articles, setArticles] = useState([])
+  const [category, setCategory] = useState('handy')
+  const [categories, setCategoryies] = useState([])
+  const [minPrice, setMinPrice] = useState(0)
+  const [maxPrice, setMaxPrice] = useState(99999)
+
   useEffect(() => {
-    axios.get('https://rentit-thb.herokuapp.com/api/articles/')
+    axios.get('https://rentit-thb.herokuapp.com/api/articles/search', {
+      params: {
+        name: searchValue,
+        category: category,
+        minPrice: minPrice,
+        maxPrice: maxPrice
+      }
+    })
       .then(res => {
         console.log(res.data)
         setArticles(res.data)
       })
-  }, [])
-  console.log(articles)
+  }, [searchValue, category, minPrice, maxPrice])
 
-  const searchList = (searchValue !== '' && articles.length > 0)
-    ? (
-    <Box align="center" mt={3}>
-        <Typography align="left">Ihre suche nach {searchValue} ergab folgende Treffer:</Typography>
-        {articles.map((article) => {
-          console.log(article.name)
-          console.log(searchValue)
-          if (article.articleId && article.images[0] && article.name.toLowerCase().includes(searchValue.toLowerCase())) {
-            return (
-              <ArticleListItem key={article.articleId } articleId={article.articleId}></ArticleListItem>
-            )
-          }
-          return null
-        })}
-      </Box>
-      )
-    : (
-      <div>Type your search above</div>
-      )
+  useEffect(() => {
+    axios.get('https://rentit-thb.herokuapp.com/api/categories/name/')
+      .then(res => {
+        setCategoryies(res.data)
+      })
+  }, [])
+  console.log(searchValue)
+  console.log(articles.length > 0)
 
   return (
-    <div>
-      { searchList }
-    </div>
+    <Container>
+      <Box className={classes.filter}>
+        <FormControl className={classes.categoryFilterItem}>
+          <InputLabel htmlFor="minPrice-filter">Category</InputLabel>
+          <Select
+            id="category-filter"
+            value={category}
+            onChange={(event) => { setCategory(event.target.value) }}
+          >
+            {categories.map((cat, i) => {
+              return <MenuItem key={i} value={cat}>{cat}</MenuItem>
+            })}
+          </Select>
+        </FormControl>
+        <FormControl className={classes.filterItem}>
+          <InputLabel htmlFor="minPrice-filter">Min. Price</InputLabel>
+          <Input
+            id="minPrice-filter"
+            value={minPrice}
+            onChange={(event) => { setMinPrice(event.target.value) }}
+            startAdornment={<InputAdornment position="start">€</InputAdornment>}
+          />
+        </FormControl>
+        <FormControl className={classes.filterItem}>
+          <InputLabel htmlFor="minPrice-filter">Max. Price</InputLabel>
+          <Input
+            id="maxPrice-filter"
+            value={maxPrice}
+            onChange={(event) => { setMaxPrice(event.target.value) }}
+            startAdornment={<InputAdornment position="start">€</InputAdornment>}
+          />
+        </FormControl>
+      </Box>
+      { searchValue && articles.length > 0
+        ? (
+            <div>
+              <Typography className={classes.infoText} variant='subtitle1' align="left">Ihre suche nach {'"'}{searchValue}{'"'} ergab folgende Treffer:</Typography>
+              {articles.map((article, index) => {
+                return (
+                  <ArticleListItem key={index} article={article}></ArticleListItem>
+                )
+              })}
+            </div>
+          )
+        : (
+          <div>Type your search above</div>
+          )
+      }
+    </Container>
   )
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     searchValue: state.searchValue
-//   }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     search: (value) => { dispatch(search(value)) }
-//   }
-// }
-
-// export default withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(Search))
 export default Search
