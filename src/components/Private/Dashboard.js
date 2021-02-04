@@ -36,7 +36,8 @@ function Dashboard () {
       url: 'https://rentit-thb.herokuapp.com/api/quantities/return/',
       data: {
         ids: [articleQuantityId]
-      }
+      },
+      headers: authHeader()
     }).then(res => {
       console.log(res.data)
       Axios.get('https://rentit-thb.herokuapp.com/api/quantities/listRental/', { headers: authHeader() })

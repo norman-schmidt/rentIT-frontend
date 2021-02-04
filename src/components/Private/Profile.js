@@ -1,81 +1,69 @@
 /* eslint-disable react/prop-types */
-import React, { Component } from 'react'
+import { Container, Grid, makeStyles, Typography } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 // import AuthService from '../services/auth-service'
-import userService from '../../services/user-service'
+// import userService from '../../services/user-service'
 
-export default class Profile extends Component {
-  constructor (props) {
-    super(props)
+const useStyles = makeStyles((theme) => ({
+  heading: {
+    marginTop: 40
+  },
+  table: {
+    marginTop: 70
+  }
+}))
 
-    this.state = {
-      currentUser: undefined,
-      id: this.props.match.param.id
+function Profile () {
+  const classes = useStyles()
+  const [user, setUser] = useState({})
+  const { isLoggedIn } = useSelector(state => state.auth)
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      // setUser(userService.getOneUser(2))
+      setUser(JSON.parse(localStorage.getItem('user')))
     }
-  }
+  }, [isLoggedIn])
 
-  componentDidMount () {
-    const user = userService.getOneUser(this.state.id)
-
-    if (user) {
-      this.setState({
-        currentUser: user
-      })
-    }
-  }
-
-  render () {
-    const { currentUser } = this.state
-
-    return (
-      <div>
-
-          {currentUser
-            ? (
-              <div>
-                  <h2 align="center">Profile for {currentUser.firstname} :</h2>
-
-                  <div>
-                  <span>Images:</span>
-                  {currentUser.images}
-                  </div>
-
-                  <div>
-                  <span>Firstname:</span>
-                  {currentUser.firstname}
-                  </div>
-
-                  <div>
-                  <span>Laststname:</span>
-                  {currentUser.lastname}
-                  </div>
-
-                  <div>
-                  <span>Email:</span>
-                  {currentUser.email}
-                  </div>
-
-                  <div>
-                  <span>Address:</span>
-                  {currentUser.firstname}
-                  </div>
-
-                  <div>
-                  <span>Rentals:</span>
-                  {currentUser.firstname}
-                  </div>
-
-                  <div>
-                  <span>Roles:</span>
-                  {currentUser.roles}
-                  </div>
-              </div>
-
-              )
-            : (
-              <h2 align="center">Signin to get the Dashboad</h2>
-              )}
-
-      </div>
-    )
-  }
+  return (
+    <Container>
+      {isLoggedIn
+        ? <div>
+            <Typography className={classes.heading} variant='h4' align="center">Profile for {user.firstname} :</Typography>
+            <Grid className={classes.table} container justify='center' alignItems='center' align='center' spacing={3}>
+              <Grid item xs={12} sm={5}>
+              <Typography variant='body1'>First name:</Typography>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <Typography variant='body2'>{user.firstname}</Typography>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <Typography variant='body1'>Last name:</Typography>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <Typography variant='body2'>{user.lastname}</Typography>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <Typography variant='body1'>Address:</Typography>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <Typography variant='body2'>{user.street + ' ' + user.hausNumber + ' | ' + user.plz + ' ' + user.ort}</Typography>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <Typography variant='body1'>Email:</Typography>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <Typography variant='body2'>{user.email}</Typography>
+              </Grid>
+            </Grid>
+          </div>
+        : (
+          <Typography variant='h5' align="center">Signin to get the Dashboad</Typography>
+          )
+      }
+    </Container>
+  )
 }
+
+export default Profile

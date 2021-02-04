@@ -4,10 +4,13 @@ import axios from 'axios'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Container, Grid, Button, Typography, FormControl, InputLabel, Select, MenuItem, makeStyles } from '@material-ui/core'
+import { Container, Grid, Button, Typography, FormControl, InputLabel, Select, MenuItem, makeStyles, Paper, TableContainer, Table, TableRow, TableCell, TableBody, Badge } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import { ADD_ITEM } from '../../actions/types'
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
+import differenceInDays from 'date-fns/differenceInDays'
 
 const useStyles = makeStyles((theme) => ({
   article: {
@@ -39,6 +42,12 @@ const useStyles = makeStyles((theme) => ({
   moreInformation: {
     paddingTop: 40
   },
+  description: {
+    marginBottom: 40
+  },
+  table: {
+
+  },
   metaInfo: {
     paddingTop: 15
   },
@@ -63,6 +72,9 @@ function Article (props) {
   const articleId = parseInt(props.match.params.article_id)
   const [article, setArticle] = useState({})
   const [quantity, setQuantity] = useState(1)
+  const [availabilityInMonth, setAvailabilityInMonth] = useState({})
+  const [selectedDate, handleDateChange] = useState(new Date())
+  let inCart = 0
   let availableQuantity = 0
   availableQuantity = useSelector(state => {
     if (state.cart.items && article) {
@@ -70,6 +82,7 @@ function Article (props) {
         return i.article.articleId === articleId
       })
       if (itemIndex >= 0) {
+        inCart = state.cart.items[itemIndex].quantity
         return article.stockLevel - state.cart.items[itemIndex].quantity
       }
     }
@@ -85,6 +98,11 @@ function Article (props) {
         console.log(res.data)
         setArticle(res.data)
       })
+    axios.get('https://rentit-thb.herokuapp.com/api/articles/availableQuantity?id=' + articleId + '&month=' + (new Date()).getMonth() + 1)
+      .then(res => {
+        console.log(res.data)
+        setAvailabilityInMonth(res.data)
+      })
   }, [])
 
   const handleQuantityChange = (event) => {
@@ -99,6 +117,14 @@ function Article (props) {
         quantity: quantity
       }
     })
+  }
+
+  const handleMonthChange = async (date) => {
+    return axios.get('https://rentit-thb.herokuapp.com/api/articles/availableQuantity?id=' + articleId + '&month=' + (date.getMonth() + 1))
+      .then(res => {
+        console.log(res.data)
+        setAvailabilityInMonth(res.data)
+      })
   }
 
   return (
@@ -134,7 +160,7 @@ function Article (props) {
                                     })}
                                   </Select>
                                 </FormControl>
-
+                                  {inCart}x in cart
                                 <Button
                                     variant="contained"
                                     color="primary"
@@ -157,9 +183,59 @@ function Article (props) {
                           }
                         </div>
                   </Grid>
-                  <Grid item xs={12} className={classes.moreInformation}>
-                    <Typography paragraph>{article.description}</Typography>
-                    <Typography variant="h5">Properties...</Typography>
+                  <Grid
+                    container
+                    direction="row-reverse"
+                    justify="center"
+                    alignItems="flex-start"
+                    item xs={12}
+                  >
+                    <Grid item xs={12} sm={6} className={classes.datePicker} align='center'>
+                      Select your Rental Date
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <DatePicker
+                          autoOk
+                          orientation="portrait"
+                          variant="static"
+                          openTo="date"
+                          value={selectedDate}
+                          onChange={handleDateChange}
+                          onMonthChange={handleMonthChange}
+                          renderDay={(day, selectedDate, isInCurrentMonth, dayComponent) => {
+                            console.log(day.getDate())
+                            const dif = differenceInDays(day, new Date())
+                            console.log(availabilityInMonth)
+                            return <Badge badgeContent={dif && availabilityInMonth > 0 ? availabilityInMonth.available[dif] : undefined}>{dayComponent}</Badge>
+                          }}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item xs={12} sm={6} className={classes.moreInformation}>
+                      <Typography className={classes.description} paragraph>{article.description}</Typography>
+                      {article.properties
+                        ? <div>
+                          <Typography variant="h6" paragraph>Properties</Typography>
+                          <TableContainer component={Paper}>
+                            <Table className={classes.table} aria-label="simple table">
+                              <TableBody>
+                                {Object.keys(article.properties).map((key) => key !== 'propertiesId' && key !== 'article'
+                                  ? (
+                                    <TableRow key={key}>
+                                      <TableCell component="th" scope="row">
+                                        {key}
+                                      </TableCell>
+                                      <TableCell align="right">{article.properties[key]}</TableCell>
+                                    </TableRow>
+                                    )
+                                  : <div></div>
+                                )}
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </div>
+                        : <div></div>
+                      }
+                    </Grid>
                   </Grid>
               </Grid>
             )

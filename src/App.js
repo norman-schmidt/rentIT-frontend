@@ -69,7 +69,7 @@ function App() {
                 <Route path="/login" component={Login}></Route>
                 <Route path="/register" component={Register}></Route>
                 <Route path="/dashboard" component={Dashboard}></Route>
-                <Route path="/profile/:id" component={Profile}></Route>
+                <Route path="/profile/" component={Profile}></Route>
               </Switch>
               <Footer></Footer>
             </Container>

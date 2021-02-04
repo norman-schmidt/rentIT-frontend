@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import ArticleListItem from '../Articles/ArticleListItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { Typography, Button, makeStyles, Grid, MenuItem, Select, InputLabel, FormControl, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core'
+import { Typography, Button, makeStyles, Grid, MenuItem, Select, InputLabel, FormControl, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton } from '@material-ui/core'
+import Skeleton from '@material-ui/lab/Skeleton'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import DateFnsUtils from '@date-io/date-fns'
 import differenceInDays from 'date-fns/differenceInDays'
 import sub from 'date-fns/sub'
@@ -10,10 +13,8 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers'
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import Axios from 'axios'
-import { CHANGE_RENTALDATE, CHANGE_QUANTITY, CHANGE_RETURNDATE, CLEAR_CART } from '../../actions/types'
-import Skeleton from '@material-ui/lab/Skeleton'
+import { CHANGE_RENTALDATE, CHANGE_QUANTITY, CHANGE_RETURNDATE, CLEAR_CART, DELETE_ITEM } from '../../actions/types'
 import authHeader from '../../services/auth-header'
 import { useHistory } from 'react-router-dom'
 
@@ -25,6 +26,17 @@ const useStyles = makeStyles((theme) => ({
   },
   article: {
     marginTop: 50
+  },
+  articleListItem: {
+    width: '100%'
+  },
+  deleteButton: {
+    marginBottom: -25,
+    marginLeft: 'auto'
+  },
+  deleteButtonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-start'
   },
   dateAndQuantity: {
     display: 'flex',
@@ -120,6 +132,15 @@ const Cart = () => {
     })
   }
 
+  const handleDelete = (articleId) => {
+    dispatch({
+      type: DELETE_ITEM,
+      payload: {
+        articleId: articleId
+      }
+    })
+  }
+
   return (
         <div>
             {cart && cart.items.length > 0
@@ -177,8 +198,11 @@ const Cart = () => {
                     ? articles.map((article, index) => {
                         return (
                           <div key={index}>
-                            {article
+                            {article && cart.items[index]
                               ? <div className={classes.article}>
+                                  <div className={classes.deleteButtonContainer}>
+                                    <IconButton className={classes.deleteButton} onClick={() => { handleDelete(article.id) }} color='secondary'><DeleteForeverIcon /></IconButton>
+                                  </div>
                                   <ArticleListItem article={article}></ArticleListItem>
                                   <Paper square variant='outlined' className={classes.dateAndQuantity}>
                                     <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
