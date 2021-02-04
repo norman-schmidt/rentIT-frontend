@@ -131,7 +131,7 @@ function Header (props) {
 
           {isLoggedIn
             ? (
-              <Avatar className={classes.account} onClick={() => { logout(dispatch); history.push('/') }}>{user.firstname.charAt(0).toUpperCase()}</Avatar>
+              <Avatar className={classes.account} onClick={() => { logout(dispatch); history.push('/') }}>{user && user.firstname ? user.firstname.charAt(0).toUpperCase() : ''}</Avatar>
               )
             : (
               <IconButton className={classes.account} component={Link} to='/login' aria-label="login">

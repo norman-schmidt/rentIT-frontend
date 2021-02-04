@@ -1,4 +1,4 @@
-import { ADD_ITEM, DELETE_ITEM, REMOVE_ITEM, CHANGE_DATE, CHANGE_QUANTITY, CLEAR_CART } from './types'
+import { ADD_ITEM, DELETE_ITEM, REMOVE_ITEM, CHANGE_QUANTITY, CLEAR_CART, CHANGE_RETURNDATE, CHANGE_RENTALDATE } from './types'
 
 export const addItem = (articleId, quantity) => ({
   type: ADD_ITEM,
@@ -16,8 +16,15 @@ export const changeQuantity = (articleId, quantity) => ({
   }
 })
 
+export const changeRentalDate = (articleId, newDate) => ({
+  type: CHANGE_RENTALDATE,
+  payload: {
+    articleId: articleId,
+    rentalDate: newDate
+  }
+})
 export const changeReturnDate = (articleId, newDate) => ({
-  type: CHANGE_DATE,
+  type: CHANGE_RETURNDATE,
   payload: {
     articleId: articleId,
     returnDate: newDate

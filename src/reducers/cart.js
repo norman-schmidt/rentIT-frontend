@@ -1,5 +1,5 @@
 /* eslint-disable default-param-last */
-import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM, CHANGE_DATE, CHANGE_QUANTITY, CLEAR_CART } from '../actions/types'
+import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM, CHANGE_QUANTITY, CLEAR_CART, CHANGE_RENTALDATE, CHANGE_RETURNDATE } from '../actions/types'
 
 const initialState = JSON.parse(localStorage.getItem('cartItems')) ?? { items: [] }
 
@@ -21,7 +21,7 @@ export default function (state = initialState, action) {
       if (itemIndex > -1) {
         state.items[itemIndex].quantity += payload.quantity
       } else {
-        state.items.push({ article: { articleId: payload.articleId }, quantity: payload.quantity, returnDate: new Date(new Date().getTime() + 604800000) })
+        state.items.push({ article: { articleId: payload.articleId }, quantity: payload.quantity, rentalDate: new Date(new Date().getTime()), returnDate: new Date(new Date().getTime() + 604800000) })
       }
       break
 
@@ -31,7 +31,13 @@ export default function (state = initialState, action) {
       }
       break
 
-    case CHANGE_DATE:
+    case CHANGE_RENTALDATE:
+      if (itemIndex > -1) {
+        state.items[itemIndex].rentalDate = payload.rentalDate
+      }
+      break
+
+    case CHANGE_RETURNDATE:
       if (itemIndex > -1) {
         state.items[itemIndex].returnDate = payload.returnDate
       }
