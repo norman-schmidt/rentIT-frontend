@@ -2,7 +2,7 @@
 import { React, useEffect, useState } from 'react'
 import axios from 'axios'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Container, Grid, Button, Typography, FormControl, InputLabel, Select, MenuItem, makeStyles } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
@@ -61,9 +61,21 @@ const useStyles = makeStyles((theme) => ({
 function Article (props) {
   const classes = useStyles()
   const articleId = parseInt(props.match.params.article_id)
-
   const [article, setArticle] = useState({})
   const [quantity, setQuantity] = useState(1)
+  let availableQuantity = 0
+  availableQuantity = useSelector(state => {
+    if (state.cart.items && article) {
+      const itemIndex = state.cart.items.findIndex((i) => {
+        return i.article.articleId === articleId
+      })
+      if (itemIndex >= 0) {
+        return article.stockLevel - state.cart.items[itemIndex].quantity
+      }
+    }
+    return article.stockLevel
+  })
+  console.log(availableQuantity)
 
   const dispatch = useDispatch()
 
@@ -105,7 +117,7 @@ function Article (props) {
                       </div>
                       <div>
                           <Typography className={classes.price} variant="h4">{article.price.toFixed(2).replace('.', ',')} €</Typography>
-                          {article.stockLevel > 0 > 0
+                          {availableQuantity > 0
                             ? <div>
                                 <FormControl className={classes.quantitySelect}>
                                   <InputLabel id="quantity-select-label">Qty.:</InputLabel>
@@ -115,7 +127,7 @@ function Article (props) {
                                     value={quantity}
                                     onChange={handleQuantityChange}
                                   >
-                                    {new Array(article.stockLevel).fill(0).map((v, i) => {
+                                    {new Array(availableQuantity).fill(0).map((v, i) => {
                                       return (
                                         <MenuItem key={i} value={(i + 1)}>{(i + 1)}</MenuItem>
                                       )
