@@ -55,7 +55,7 @@ const Cart = () => {
   const [articles, setArticles] = useState([])
   const [total, setTotal] = useState(0)
 
-  var cart
+  let cart = {}
   const calculateTotal = () => {
     if (cart && articles.length > 0) {
       let sum = 0
