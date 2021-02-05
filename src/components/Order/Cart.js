@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     height: 50
   },
   article: {
-    marginTop: 50
+    marginTop: 0
   },
   articleListItem: {
     width: '100%'

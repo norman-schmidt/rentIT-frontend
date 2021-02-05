@@ -65,11 +65,16 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`
   },
-  account: {
+  accountLoggedOut: {
+    color: 'white',
+    marginLeft: theme.spacing(2),
+    marginRight: -5
+  },
+  accountLoggedIn: {
     color: 'white',
     marginLeft: theme.spacing(2),
     marginRight: -5,
-    backgroundColor: theme.palette.primary
+    backgroundColor: theme.palette.secondary.main
   }
 }))
 
@@ -130,7 +135,7 @@ function Header (props) {
           {isLoggedIn
             ? (
               <div>
-                <Avatar className={classes.account} onClick={(event) => { setAnchorEl(event.currentTarget) }} >{user && user.firstname ? user.firstname.charAt(0).toUpperCase() : ''}</Avatar>
+                <Avatar className={classes.accountLoggedIn} onClick={(event) => { setAnchorEl(event.currentTarget) }} >{user && user.firstname ? user.firstname.charAt(0).toUpperCase() : ''}</Avatar>
                 <Menu
                   anchorEl={anchorEl}
                   open={Boolean(anchorEl)}
@@ -158,7 +163,7 @@ function Header (props) {
               </div>
               )
             : (
-              <IconButton className={classes.account} component={Link} to='/login' aria-label="login">
+              <IconButton className={classes.accountLoggedOut} component={Link} to='/login' aria-label="login">
                 <AccountCircle />
               </IconButton>
               )}

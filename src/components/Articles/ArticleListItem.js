@@ -60,6 +60,16 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('xs')]: {
       justifyContent: 'fle-start'
     }
+  },
+  lowStock: {
+    color: 'red',
+    display: 'flex',
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'center'
+    },
+    [theme.breakpoints.up('xs')]: {
+      justifyContent: 'fle-start'
+    }
   }
 }))
 

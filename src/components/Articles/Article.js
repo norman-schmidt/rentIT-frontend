@@ -10,6 +10,8 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import { ADD_ITEM } from '../../actions/types'
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
+import isBefore from 'date-fns/isBefore'
+import sub from 'date-fns/sub'
 
 const useStyles = makeStyles((theme) => ({
   article: {
@@ -41,9 +43,6 @@ const useStyles = makeStyles((theme) => ({
   bottomArea: {
     paddingTop: 40
   },
-  moreInformation: {
-
-  },
   dateText: {
     paddingLeft: 20
   },
@@ -54,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 60
   },
   badge: {
-    fontSize: '0.4em'
+    height: 43
   },
   metaInfo: {
     paddingTop: 15
@@ -201,7 +200,7 @@ function Article (props) {
                     className={classes.bottomArea}
                   >
                     <Grid item xs={12} sm={6} align='left:'>
-                      <Typography className={classes.dateText}>Select your Rental Date:</Typography>
+                      <Typography className={classes.dateText}>Take a look at the avalability of this article:</Typography>
                       <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <DatePicker
                           className={classes.datePicker}
@@ -214,12 +213,12 @@ function Article (props) {
                           onChange={handleDateChange}
                           onMonthChange={handleMonthChange}
                           renderDay={(day, selectedDate, isInCurrentMonth, dayComponent) => {
-                            return <Badge color='secondary' classNam={classes.badge} badgeContent={availabilityInMonth.available && isInCurrentMonth && day.getYear() === (new Date()).getYear() ? availabilityInMonth.available[day.getDate() - 1] : undefined}>{dayComponent}</Badge>
+                            return <Badge color='secondary' className={classes.badge} badgeContent={availabilityInMonth.available && isInCurrentMonth && day.getYear() === (new Date()).getYear() && !isBefore(day, sub(new Date(), { days: 1 })) ? availabilityInMonth.available[day.getDate() - 1] : undefined}>{dayComponent}</Badge>
                           }}
                         />
                       </MuiPickersUtilsProvider>
                     </Grid>
-                    <Grid item xs={12} sm={6} className={classes.moreInformation}>
+                    <Grid item xs={12} sm={6}>
                       <Typography className={classes.description} paragraph>{article.description}</Typography>
                       {article.properties
                         ? <div>
