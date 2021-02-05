@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 0
   },
   bottomArea: {
-    paddingTop: 40
+    paddingTop: 90
   },
   dateText: {
     paddingLeft: 20
