@@ -73,6 +73,7 @@ function Dashboard () {
                 ? <div>
                     <Typography className={classes.rentalInfo} variant='h6' align="center">Here is an overview of your rented items:</Typography>
                     <Grid className={classes.tableHeader} container spacing={2} alignItems='center' justify='center' align='center'>
+                    <Grid item xs={12} md={2}></Grid>
                       <Grid item xs={5} md={2}>
                         <Typography variant='body1'>Name</Typography>
                       </Grid>

@@ -31,7 +31,10 @@ const theme = createMuiTheme({
     secondary: {
       main: '#f50057'
     },
-    tonalOffset: 0.2
+    tonalOffset: 0.2,
+    background: {
+      default: '#fff'
+    }
   },
   typography: {
     fontFamily: [
