@@ -32,16 +32,17 @@ function Search (props) {
   const searchValue = props.match.params.search_value
 
   const [articles, setArticles] = useState([])
-  const [category, setCategory] = useState('handy')
+  const [category, setCategory] = useState('All')
   const [categories, setCategoryies] = useState([])
   const [minPrice, setMinPrice] = useState(0)
   const [maxPrice, setMaxPrice] = useState(99999)
 
   useEffect(() => {
+    console.log(category)
     axios.get(API_ENDPOINT + 'articles/search', {
       params: {
         name: searchValue,
-        category: category,
+        category: category !== 'All' ? category : '',
         minPrice: minPrice,
         maxPrice: maxPrice
       }
@@ -68,6 +69,7 @@ function Search (props) {
             value={category}
             onChange={(event) => { setCategory(event.target.value) }}
           >
+            <MenuItem value={'All'}>{'All'}</MenuItem>
             {categories.map((cat, i) => {
               return <MenuItem key={i} value={cat}>{cat}</MenuItem>
             })}

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_ENDPOINT } from '../../config'
+import { API_ENDPOINT } from '../config'
 import authHeader from './auth-header'
 
 const API_URL = API_ENDPOINT

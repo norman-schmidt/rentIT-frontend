@@ -53,11 +53,17 @@ export default function SignUp (props) {
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [address, setAddress] = useState('')
+  const [street, setStreet] = useState('')
+  const [houseNumber, setHouseNumber] = useState('')
+  const [city, setCity] = useState('')
+  const [postalCode, setPostalCode] = useState('')
   const [emailError, setEmailError] = useState(false)
   const [firstNameError, setFirstNameError] = useState(false)
   const [lastNameError, setLastNameError] = useState(false)
-  const [addressError, setAddressError] = useState(false)
+  const [streetError, setStreetError] = useState(false)
+  const [houseNumberError, setHouseNumberError] = useState(false)
+  const [cityError, setCityError] = useState(false)
+  const [postalCodeError, setPostalCodeError] = useState(false)
   const [pwdError, setPwdError] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -70,10 +76,10 @@ export default function SignUp (props) {
 
     setLoading(true)
 
-    const registerCallback = register(email, password, lastName, firstName, address)
+    const registerCallback = register(email, password, lastName, firstName, street, houseNumber, postalCode, city)
     registerCallback(dispatch)
       .then(() => {
-        props.history.push('/dashboard')
+        props.history.push('/login')
       })
       .catch(() => {
         setLoading(false)
@@ -137,39 +143,100 @@ export default function SignUp (props) {
                 autoComplete='lname'
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={7}>
               <TextField
-                error = {addressError}
-                helperText = {addressError ? 'The address must have 3 - 20 characters' : ''}
+                error = {streetError}
+                helperText = {streetError ? 'The street must have 3 - 20 characters' : ''}
                 variant='outlined'
                 margin='normal'
                 required
                 fullWidth
-                onChange={(e) => setAddress(e.target.value)}
-                onBlur={(e) => { setAddressError(e.target.value.length < 3 || e.target.value.length > 20) }}
-                onFocus={() => { setAddressError(false) }}
-                id='adress'
-                label='Adress'
-                name='adress'
-                autoComplete='address'
+                onChange={(e) => setStreet(e.target.value)}
+                onBlur={(e) => { setStreetError(e.target.value.length < 3 || e.target.value.length > 20) }}
+                onFocus={() => { setStreetError(false) }}
+                id='street'
+                label='Street'
+                name='street'
+                autoComplete='street'
+              />
+            </Grid>
+            <Grid item xs={5}>
+              <TextField
+                error = {houseNumberError}
+                helperText = {houseNumberError ? 'The house number must have 1 - 4 characters' : ''}
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                type='number'
+                inputProps={{
+                  min: '1',
+                  max: '9999'
+                }}
+                onChange={(e) => setHouseNumber(e.target.value)}
+                onBlur={(e) => { setHouseNumberError(e.target.value.length < 1 || e.target.value.length > 4) }}
+                onFocus={() => { setHouseNumberError(false) }}
+                id='houseNumber'
+                label='House Number'
+                name='houseNumber'
+                autoComplete='houseNumber'
+              />
+            </Grid>
+            <Grid item xs={7}>
+              <TextField
+                error = {cityError}
+                helperText = {cityError ? 'The city must have 3 - 20 characters' : ''}
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                onChange={(e) => setCity(e.target.value)}
+                onBlur={(e) => { setCityError(e.target.value.length < 3 || e.target.value.length > 20) }}
+                onFocus={() => { setCityError(false) }}
+                id='city'
+                label='City'
+                name='city'
+                autoComplete='city'
+              />
+            </Grid>
+            <Grid item xs={5}>
+              <TextField
+                error = {postalCodeError}
+                helperText = {postalCodeError ? 'The postal code must have 5 characters' : ''}
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                type="number"
+                inputProps={{
+                  min: '1',
+                  max: '99999'
+                }}
+                onChange={(e) => setPostalCode(e.target.value)}
+                onBlur={(e) => { setPostalCodeError(e.target.value.length !== 5) }}
+                onFocus={() => { setPostalCodeError(false) }}
+                id='postalCode'
+                label='Postal Code'
+                name='postalCode'
+                autoComplete='postalCode'
               />
             </Grid>
             <Grid item xs={12}>
-            <TextField
-                error = {emailError}
-                helperText = {emailError ? 'Please enter a valid Email Adress' : ''}
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                onChange={(e) => setEmail(e.target.value)}
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onBlur={() => { setEmailError(!isEmail(email)) }}
-                onFocus={() => { setEmailError(false) }}
-            />
+              <TextField
+                  error = {emailError}
+                  helperText = {emailError ? 'Please enter a valid Email Address' : ''}
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  onChange={(e) => setEmail(e.target.value)}
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  onBlur={() => { setEmailError(!isEmail(email)) }}
+                  onFocus={() => { setEmailError(false) }}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -181,6 +248,7 @@ export default function SignUp (props) {
                 fullWidth
                 onChange={(e) => setPassword(e.target.value)}
                 onBlur={(e) => { setPwdError(e.target.value.length < 6 || e.target.value.length > 40) }}
+                onKeyUp={(e) => { setPwdError(e.target.value.length < 6 || e.target.value.length > 40) }}
                 onFocus={() => { setPwdError(false) }}
                 name='password'
                 label='Password'
@@ -197,7 +265,7 @@ export default function SignUp (props) {
             variant='contained'
             color='primary'
             className={classes.submit}
-            disabled={loading || firstNameError || lastNameError || addressError || emailError || pwdError}
+            disabled={loading || firstNameError || lastNameError || streetError || houseNumberError || cityError || postalCodeError || emailError || pwdError}
           >
             Sign Up
           </Button>

@@ -2,7 +2,6 @@
 import { Container, Grid, makeStyles, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-// import userService from '../../services/user-service'
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -20,7 +19,6 @@ function Profile () {
 
   useEffect(() => {
     if (isLoggedIn) {
-      // setUser(userService.getOneUser(2))
       setUser(JSON.parse(localStorage.getItem('user')))
     }
   }, [isLoggedIn])
@@ -29,7 +27,7 @@ function Profile () {
     <Container>
       {isLoggedIn
         ? <div>
-            <Typography className={classes.heading} variant='h4' align="center">Profile for {user.firstname} :</Typography>
+            <Typography className={classes.heading} variant='h4' align="center">Your Profile</Typography>
             <Grid className={classes.table} container justify='center' alignItems='center' align='center' spacing={3}>
               <Grid item xs={12} sm={5}>
               <Typography variant='body1'>First name:</Typography>
