@@ -162,7 +162,7 @@ const Cart = () => {
                             <DialogTitle id="confirmation-dialog">Ready to rent?</DialogTitle>
                             <DialogContent>
                               <DialogContentText>
-                                You will rent {cart.length} and pay a total of {total}€.
+                                You will rent {cart.items.length} item(s) and pay a total of {total}€.
                               </DialogContentText>
                             </DialogContent>
                             <DialogActions>

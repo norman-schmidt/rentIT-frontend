@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     maxWidth: '100%',
     [theme.breakpoints.down('sm')]: {
-      maxHeight: 100
+      maxHeight: 130
     },
     [theme.breakpoints.up('sm')]: {
       maxHeight: 150
@@ -31,21 +31,35 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     display: 'flex',
-    // [theme.breakpoints.down('sm')]: {
-    //   textAlign: 'center',
-    //   justifyContent: 'center'
-    // },
-    [theme.breakpoints.up('xs')]: {
+    [theme.breakpoints.down('xs')]: {
+      textAlign: 'center',
+      justifyContent: 'center'
+    },
+    [theme.breakpoints.up('sm')]: {
       textAlign: 'left',
       justifyContent: 'flex-start'
     }
   },
   price: {
     display: 'flex',
-    justifyContent: 'left',
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'center'
+    },
+    [theme.breakpoints.up('sm')]: {
+      justifyContent: 'flex-start'
+    },
     marginTop: 25,
     paddingRight: 15,
     paddingBottom: 10
+  },
+  stock: {
+    display: 'flex',
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: 'center'
+    },
+    [theme.breakpoints.up('xs')]: {
+      justifyContent: 'fle-start'
+    }
   }
 }))
 
@@ -57,7 +71,7 @@ function ArticleListItem (props) {
   return (
         <Paper variant="outlined" className={classes.root} onClick={() => { history.push('/article/' + article.id) }}>
           <Grid container spacing={3} className={classes.gridContainer}>
-            <Grid item xs={12} sm={5}>
+            <Grid item xs={12} sm={5} align='center'>
               <img className={classes.image} src={article.imageLink ? article.imageLink : 'https://i.stack.imgur.com/GNhxO.png'}></img>
             </Grid>
             <Grid item xs={12} sm={7} className={classes.info}>
@@ -66,6 +80,14 @@ function ArticleListItem (props) {
               <Box className={classes.price}>
                 <Typography variant="body1">{article.price ? article.price.toFixed(2).replace('.', ',') + '€ / day' : ''}</Typography>
               </Box>
+              {article.stockLevel && article.stockLevel > 3
+                ? <Box className={classes.stock}>
+                  <Typography variant="body2">{article.stockLevel + ' in stock'}</Typography>
+                  </Box>
+                : <Box className={classes.lowStock}>
+                    <Typography variant="body2">{article.stockLevel + ' in stock'}</Typography>
+                  </Box>
+              }
             </Grid>
           </Grid>
         </Paper>

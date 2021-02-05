@@ -124,6 +124,10 @@ function Article (props) {
     })
   }
 
+  useEffect(() => {
+    if (quantity > availableQuantity) setQuantity(availableQuantity)
+  }, [availableQuantity])
+
   const handleMonthChange = async (date) => {
     return axios.get('https://rentit-thb.herokuapp.com/api/articles/availableQuantity?id=' + articleId + '&month=' + (date.getMonth() + 1))
       .then(res => {
@@ -189,6 +193,7 @@ function Article (props) {
                   </Grid>
                   <Grid
                     container
+                    spacing={4}
                     direction="row-reverse"
                     justify="center"
                     alignItems="flex-start"
