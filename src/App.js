@@ -32,6 +32,12 @@ const theme = createMuiTheme({
       main: '#f50057'
     },
     tonalOffset: 0.2
+  },
+  typography: {
+    fontFamily: [
+      '\'Bai Jamjuree\'',
+      'sans-serif'
+    ].join(',')
   }
 })
 

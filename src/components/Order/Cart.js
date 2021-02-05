@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 5,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  cartInfo: {
+    marginTop: 100
   }
 }))
 
@@ -280,7 +283,7 @@ const Cart = () => {
                       </div>
                     }
                   </div>
-              : <Typography align='center'>Your cart is empty.</Typography>
+              : <Typography className={classes.cartInfo} variant='h5' align="center">Your cart is empty.</Typography>
             }
         </div>
   )

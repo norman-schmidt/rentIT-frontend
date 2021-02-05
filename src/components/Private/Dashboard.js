@@ -9,6 +9,12 @@ import { useSelector } from 'react-redux'
 const useStyles = makeStyles((theme) => ({
   tableHeader: {
     fontWeight: 'bold'
+  },
+  loginInfo: {
+    marginTop: 100
+  },
+  rentalInfo: {
+    marginTop: 60
   }
 }))
 
@@ -112,11 +118,11 @@ function Dashboard () {
                       )
                     })}
                   </div>
-                : <Typography variant='h6' align="center">You currently have no rentals.</Typography>}
+                : <Typography className={classes.rentalInfo} variant='h6' align="center">You currently have no rentals.</Typography>}
             </div>
             )
           : (
-              <Typography variant='h5' align="center">Please log in or create an account to see your Dashboard.</Typography>
+              <Typography className={classes.loginInfo} variant='h5' align="center">Please log in or create an account to see your Dashboard.</Typography>
             )}
 
     </div>

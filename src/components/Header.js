@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block'
     },
-    fontFamily: 'Consolas'
+    fontFamily: '\'Geo\', sans-serif'
   },
   search: {
     flexGrow: 1,
@@ -103,7 +103,7 @@ function Header (props) {
             <LaptopChromebook />
           </IconButton>
           <Typography className={classes.title} variant="h4" noWrap>
-            RENTIT
+            RentIt
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
