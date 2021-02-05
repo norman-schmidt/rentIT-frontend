@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { API_ENDPOINT } from '../../config'
 
 import { Box, makeStyles } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
@@ -19,7 +20,7 @@ function Category (props) {
 
   const categoryName = props.match.params.category_name
   useEffect(() => {
-    axios.get('https://rentit-thb.herokuapp.com/api/categories/name/' + categoryName)
+    axios.get(API_ENDPOINT + 'categories/name/' + categoryName)
       .then(res => {
         setCategory(res.data)
       })

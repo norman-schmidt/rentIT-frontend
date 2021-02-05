@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Button, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
 import Axios from 'axios'
+import { API_ENDPOINT } from '../../config'
 import React, { useEffect, useState } from 'react'
 import AuthService from '../../services/auth-service'
 import authHeader from '../../services/auth-header'
@@ -41,7 +42,7 @@ function Dashboard () {
     const currentUser = AuthService.getCurrentUser()
     if (currentUser) {
       setUser(currentUser)
-      Axios.get('https://rentit-thb.herokuapp.com/api/quantities/listRental/', { headers: authHeader() })
+      Axios.get(API_ENDPOINT + 'quantities/listRental/', { headers: authHeader() })
         .then(res => {
           setRentedArticles(res.data)
         })
@@ -51,13 +52,13 @@ function Dashboard () {
   const handleReturn = (articleQuantityId) => {
     Axios({
       method: 'POST',
-      url: 'https://rentit-thb.herokuapp.com/api/quantities/return/',
+      url: API_ENDPOINT + 'quantities/return/',
       data: {
         ids: [articleQuantityId]
       },
       headers: authHeader()
     }).then(res => {
-      Axios.get('https://rentit-thb.herokuapp.com/api/quantities/listRental/', { headers: authHeader() })
+      Axios.get(API_ENDPOINT + 'quantities/listRental/', { headers: authHeader() })
         .then(res => {
           setRentedArticles(res.data)
         })

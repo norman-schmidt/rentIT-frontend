@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { API_ENDPOINT } from '../../config'
 
 import { List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core'
 import SmartphoneIcon from '@material-ui/icons/Smartphone'
@@ -17,7 +18,7 @@ function Categories (props) {
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
-    axios.get('https://rentit-thb.herokuapp.com/api/categories/name/')
+    axios.get(API_ENDPOINT + 'categories/name/')
       .then(res => {
         setCategories(res.data)
       })

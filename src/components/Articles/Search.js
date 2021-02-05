@@ -6,6 +6,7 @@ import ArticleListItem from './ArticleListItem'
 import { Box, Container, FormControl, Input, InputAdornment, InputLabel, makeStyles, MenuItem, Select, Typography } from '@material-ui/core'
 
 import axios from 'axios'
+import { API_ENDPOINT } from '../../config'
 
 const useStyles = makeStyles((theme) => ({
   filter: {
@@ -37,7 +38,7 @@ function Search (props) {
   const [maxPrice, setMaxPrice] = useState(99999)
 
   useEffect(() => {
-    axios.get('https://rentit-thb.herokuapp.com/api/articles/search', {
+    axios.get(API_ENDPOINT + 'articles/search', {
       params: {
         name: searchValue,
         category: category,
@@ -51,7 +52,7 @@ function Search (props) {
   }, [searchValue, category, minPrice, maxPrice])
 
   useEffect(() => {
-    axios.get('https://rentit-thb.herokuapp.com/api/categories/name/')
+    axios.get(API_ENDPOINT + 'categories/name/')
       .then(res => {
         setCategoryies(res.data)
       })

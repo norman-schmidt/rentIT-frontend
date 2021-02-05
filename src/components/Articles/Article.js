@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { React, useEffect, useState } from 'react'
 import axios from 'axios'
+import { API_ENDPOINT } from '../../config'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -99,11 +100,11 @@ function Article (props) {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    axios.get('https://rentit-thb.herokuapp.com/api/articles/' + articleId)
+    axios.get(API_ENDPOINT + 'articles/' + articleId)
       .then(res => {
         setArticle(res.data)
       })
-    axios.get('https://rentit-thb.herokuapp.com/api/articles/availableQuantity?id=' + articleId + '&month=' + ((new Date()).getMonth() + 1))
+    axios.get(API_ENDPOINT + 'articles/availableQuantity?id=' + articleId + '&month=' + ((new Date()).getMonth() + 1))
       .then(res => {
         setAvailabilityInMonth(res.data)
       })
@@ -128,7 +129,7 @@ function Article (props) {
   }, [availableQuantity])
 
   const handleMonthChange = async (date) => {
-    return axios.get('https://rentit-thb.herokuapp.com/api/articles/availableQuantity?id=' + articleId + '&month=' + (date.getMonth() + 1))
+    return axios.get(API_ENDPOINT + 'articles/availableQuantity?id=' + articleId + '&month=' + (date.getMonth() + 1))
       .then(res => {
         setAvailabilityInMonth(res.data)
       })

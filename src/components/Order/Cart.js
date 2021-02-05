@@ -14,6 +14,7 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers'
 import Axios from 'axios'
+import { API_ENDPOINT } from '../../config'
 import { CHANGE_RENTALDATE, CHANGE_QUANTITY, CHANGE_RETURNDATE, CLEAR_CART, DELETE_ITEM } from '../../actions/types'
 import authHeader from '../../services/auth-header'
 import { useHistory } from 'react-router-dom'
@@ -79,7 +80,7 @@ const Cart = () => {
   useEffect(() => {
     Axios({
       method: 'POST',
-      url: 'https://rentit-thb.herokuapp.com/api/articles/articlesByIds/',
+      url: API_ENDPOINT + 'articles/articlesByIds/',
       data: {
         ids: cart.items.map((item) => item.article.articleId)
       }
@@ -93,7 +94,7 @@ const Cart = () => {
   const rent = () => {
     Axios({
       method: 'POST',
-      url: 'https://rentit-thb.herokuapp.com/api/quantities/',
+      url: API_ENDPOINT + 'quantities/',
       data: cart.items,
       headers: authHeader()
     }).then(res => {

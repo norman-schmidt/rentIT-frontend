@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { API_ENDPOINT } from '../config'
 
-const API_URL = 'https://rentit-thb.herokuapp.com/api/auth/'
+const API_URL = API_ENDPOINT + 'auth/'
 
 class AuthService {
   login (email, password) {

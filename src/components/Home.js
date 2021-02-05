@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 
 import Axios from 'axios'
+import { API_ENDPOINT } from '../config'
 
 const useStyles = makeStyles({
   root: {
@@ -27,7 +28,7 @@ function Home (props) {
   const [categories, setCategories] = useState([])
 
   useEffect(() => {
-    Axios.get('https://rentit-thb.herokuapp.com/api/categories/name/')
+    Axios.get(API_ENDPOINT + 'categories/name/')
       .then(res => {
         setCategories(res.data)
       })
