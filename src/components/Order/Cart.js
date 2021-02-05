@@ -88,14 +88,12 @@ const Cart = () => {
   useEffect(calculateTotal, [articles])
 
   const rent = () => {
-    console.log(cart.items)
     Axios({
       method: 'POST',
       url: 'https://rentit-thb.herokuapp.com/api/quantities/',
       data: cart.items,
       headers: authHeader()
     }).then(res => {
-      console.log(res.data)
       dispatch({
         type: CLEAR_CART
       })

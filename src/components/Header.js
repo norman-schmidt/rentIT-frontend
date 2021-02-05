@@ -16,9 +16,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-// import { connect } from 'react-redux'
-// import { search } from '../actions/searchAction'
-
 import { logout } from '../actions/auth'
 import AuthService from '../services/auth-service'
 import { Avatar, ListItemIcon, Menu, MenuItem } from '@material-ui/core'
@@ -67,9 +64,6 @@ const useStyles = makeStyles((theme) => ({
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`
-    // [theme.breakpoints.up('sm')]: {
-    //   width: '12ch',
-    // }
   },
   account: {
     color: 'white',
@@ -126,7 +120,6 @@ function Header (props) {
                 onKeyUp={(e) => {
                   // if (e.key === 'Enter') {
                   history.push('/search/' + e.target.value)
-                  console.log(history)
                   // }
                 }}
                 inputProps={{ 'aria-label': 'search' }}
@@ -176,21 +169,4 @@ function Header (props) {
   )
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     searchValue: state.searchValue
-//   }
-// }
-
-// const loadUser = () => {
-//   this.props.history.push(`/profile/${user.id}`)
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     search: (value) => { dispatch(search(value)) }
-//   }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Header)
 export default Header

@@ -29,7 +29,6 @@ function Home (props) {
   useEffect(() => {
     Axios.get('https://rentit-thb.herokuapp.com/api/categories/name/')
       .then(res => {
-        console.log(res.data)
         setCategories(res.data)
       })
   }, [])
@@ -50,7 +49,7 @@ function Home (props) {
               <CardContent>
                 <Typography gutterBottom variant="h6" component="h6">
                   {categorie.toUpperCase()}
-              </Typography>
+                </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
 
               </Typography>

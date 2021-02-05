@@ -18,11 +18,9 @@ function Category (props) {
   const [category, setCategory] = useState([])
 
   const categoryName = props.match.params.category_name
-  console.log(categoryName)
   useEffect(() => {
     axios.get('https://rentit-thb.herokuapp.com/api/categories/name/' + categoryName)
       .then(res => {
-        console.log(res.data)
         setCategory(res.data)
       })
   }, [])

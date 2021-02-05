@@ -24,7 +24,6 @@ function Dashboard () {
       setUser(currentUser)
       Axios.get('https://rentit-thb.herokuapp.com/api/quantities/listRental/', { headers: authHeader() })
         .then(res => {
-          console.log(res.data)
           setRentedArticles(res.data)
         })
     }
@@ -39,10 +38,8 @@ function Dashboard () {
       },
       headers: authHeader()
     }).then(res => {
-      console.log(res.data)
       Axios.get('https://rentit-thb.herokuapp.com/api/quantities/listRental/', { headers: authHeader() })
         .then(res => {
-          console.log(res.data)
           setRentedArticles(res.data)
         })
     })

@@ -70,7 +70,6 @@ function Footer () {
         <BottomNavigation
             value={value}
             onChange={handleChange}
-            // showLabels
             className={classes.bottomNavigation}
         >
             <BottomNavigationAction

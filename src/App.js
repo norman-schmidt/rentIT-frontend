@@ -19,8 +19,6 @@ import Container from '@material-ui/core/Container'
 
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 
-import { SnackbarProvider } from 'notistack'
-
 import store from './store'
 import { Provider } from 'react-redux'
 
@@ -48,34 +46,27 @@ function App() {
 
   return (
     <Provider store={store}>
-      <SnackbarProvider
-        maxSnack={3}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center'
-        }}>
-        <Router>
-          <ThemeProvider theme={theme}>
-            <Container disableGutters maxWidth="md" className={classes.root}>
-              <Header></Header>
-              <Switch>
-                <Route exact path="/" component={Home}></Route>
-                <Route exact path="/article/:article_id" component={Article}></Route>
-                <Route path="/categories/:category_name" component={Category}></Route>
-                <Route path="/categories" component={Categories}></Route>
-                <Route path="/cart" component={Cart}></Route>
-                <Route path="/search/:search_value" component={Search}></Route>
-                <Route path="/search" component={Search}></Route>
-                <Route path="/login" component={Login}></Route>
-                <Route path="/register" component={Register}></Route>
-                <Route path="/dashboard" component={Dashboard}></Route>
-                <Route path="/profile/" component={Profile}></Route>
-              </Switch>
-              <Footer></Footer>
-            </Container>
-          </ThemeProvider>
-        </Router>
-      </SnackbarProvider>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <Container disableGutters maxWidth="md" className={classes.root}>
+            <Header></Header>
+            <Switch>
+              <Route exact path="/" component={Home}></Route>
+              <Route exact path="/article/:article_id" component={Article}></Route>
+              <Route path="/categories/:category_name" component={Category}></Route>
+              <Route path="/categories" component={Categories}></Route>
+              <Route path="/cart" component={Cart}></Route>
+              <Route path="/search/:search_value" component={Search}></Route>
+              <Route path="/search" component={Search}></Route>
+              <Route path="/login" component={Login}></Route>
+              <Route path="/register" component={Register}></Route>
+              <Route path="/dashboard" component={Dashboard}></Route>
+              <Route path="/profile/" component={Profile}></Route>
+            </Switch>
+            <Footer></Footer>
+          </Container>
+        </ThemeProvider>
+      </Router>
     </Provider>
   )
 }

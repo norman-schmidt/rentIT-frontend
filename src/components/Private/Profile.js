@@ -2,7 +2,6 @@
 import { Container, Grid, makeStyles, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-// import AuthService from '../services/auth-service'
 // import userService from '../../services/user-service'
 
 const useStyles = makeStyles((theme) => ({

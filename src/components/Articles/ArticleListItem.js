@@ -53,7 +53,6 @@ function ArticleListItem (props) {
   const classes = useStyles()
   const { article } = props
   const history = useHistory()
-  // console.log(article)
 
   return (
         <Paper variant="outlined" className={classes.root} onClick={() => { history.push('/article/' + article.id) }}>

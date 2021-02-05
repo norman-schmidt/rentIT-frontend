@@ -14,8 +14,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 
-// import { useSnackbar } from 'notistack'
-
 import { isEmail } from 'validator'
 
 import { register } from '../../actions/auth'
@@ -50,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp (props) {
   const classes = useStyles()
-  //   const { enqueueSnackbar } = useSnackbar()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -76,7 +73,6 @@ export default function SignUp (props) {
     const registerCallback = register(email, password, lastName, firstName, address)
     registerCallback(dispatch)
       .then(() => {
-        //   if (message) enqueueSnackbar(message, { variant: 'success' })
         props.history.push('/dashboard')
       })
       .catch(() => {

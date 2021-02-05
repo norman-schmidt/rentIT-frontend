@@ -19,7 +19,6 @@ function Categories (props) {
   useEffect(() => {
     axios.get('https://rentit-thb.herokuapp.com/api/categories/name/')
       .then(res => {
-        console.log(res.data)
         setCategories(res.data)
       })
   }, [])

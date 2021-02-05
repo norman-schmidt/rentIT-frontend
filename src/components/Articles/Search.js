@@ -46,7 +46,6 @@ function Search (props) {
       }
     })
       .then(res => {
-        console.log(res.data)
         setArticles(res.data)
       })
   }, [searchValue, category, minPrice, maxPrice])
@@ -57,8 +56,6 @@ function Search (props) {
         setCategoryies(res.data)
       })
   }, [])
-  console.log(searchValue)
-  console.log(articles.length > 0)
 
   return (
     <Container>

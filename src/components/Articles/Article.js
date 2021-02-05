@@ -96,19 +96,16 @@ function Article (props) {
     }
     return article.stockLevel
   })
-  console.log(availableQuantity)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     axios.get('https://rentit-thb.herokuapp.com/api/articles/' + articleId)
       .then(res => {
-        console.log(res.data)
         setArticle(res.data)
       })
     axios.get('https://rentit-thb.herokuapp.com/api/articles/availableQuantity?id=' + articleId + '&month=' + ((new Date()).getMonth() + 1))
       .then(res => {
-        console.log(res.data)
         setAvailabilityInMonth(res.data)
       })
   }, [])
@@ -130,7 +127,6 @@ function Article (props) {
   const handleMonthChange = async (date) => {
     return axios.get('https://rentit-thb.herokuapp.com/api/articles/availableQuantity?id=' + articleId + '&month=' + (date.getMonth() + 1))
       .then(res => {
-        console.log(res.data)
         setAvailabilityInMonth(res.data)
       })
   }

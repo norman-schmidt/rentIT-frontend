@@ -11,8 +11,6 @@ import { AccountCircle } from '@material-ui/icons'
 import { isEmail } from 'validator'
 import { CLEAR_MESSAGE } from '../../actions/types'
 
-// import { useSnackbar } from 'notistack'
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(4),
@@ -42,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Login (props) {
   const classes = useStyles()
-  // const { enqueueSnackbar } = useSnackbar()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState()
@@ -65,7 +62,6 @@ function Login (props) {
         props.history.push('/dashboard')
       })
       .catch(() => {
-        // if (message && !isLoggedIn) enqueueSnackbar(message, { variant: 'error' })
         setLoading(false)
       })
   }
