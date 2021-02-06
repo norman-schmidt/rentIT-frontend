@@ -1,6 +1,6 @@
 /* eslint-disable space-before-function-paren */
 import React from 'react'
-
+import store from './store'
 import Home from './components/Home'
 import Article from './components/Articles/Article'
 import Categories from './components/Articles/Categories'
@@ -16,10 +16,7 @@ import Profile from './components/Private/Profile'
 
 import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-
-import store from './store'
 import { Provider } from 'react-redux'
 
 const theme = createMuiTheme({
