@@ -4,7 +4,7 @@ import { API_ENDPOINT } from '../../config'
 import AuthService from '../../services/auth-service'
 import authHeader from '../../services/auth-header'
 
-import { Button, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
+import { Backdrop, Button, CircularProgress, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import Axios from 'axios'
 
@@ -38,6 +38,7 @@ function Dashboard () {
   const [user, setUser] = useState(null)
   const { isLoggedIn } = useSelector(state => state.auth)
   const [rentedArticles, setRentedArticles] = useState([])
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     const currentUser = AuthService.getCurrentUser()
@@ -51,6 +52,7 @@ function Dashboard () {
   }, [])
 
   const handleReturn = (articleQuantityId) => {
+    setOpen(true)
     Axios({
       method: 'POST',
       url: API_ENDPOINT + 'quantities/return/',
@@ -62,6 +64,10 @@ function Dashboard () {
       Axios.get(API_ENDPOINT + 'quantities/listRental/', { headers: authHeader() })
         .then(res => {
           setRentedArticles(res.data)
+          setOpen(false)
+        })
+        .catch(() => {
+          setOpen(false)
         })
     })
   }
@@ -122,7 +128,7 @@ function Dashboard () {
                               </Button>
                             </Grid>
                             <Grid item xs={5} md={1}>
-                              <Button variant="contained" color='secondary' onClick={() => handleReturn(article.article_quantityId)}>
+                              <Button disabled={open} variant="contained" color='secondary' onClick={() => handleReturn(article.article_quantityId)}>
                                 Return
                               </Button>
                             </Grid>
@@ -138,7 +144,9 @@ function Dashboard () {
           : (
               <Typography className={classes.loginInfo} variant='h5' align="center">Please log in or create an account to see your Dashboard.</Typography>
             )}
-
+      <Backdrop invisible={true} open={open}>
+        <CircularProgress color="primary" />
+      </Backdrop>
     </div>
   )
 }
