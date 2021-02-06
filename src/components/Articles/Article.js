@@ -138,7 +138,7 @@ function Article (props) {
       <Container className={classes.article}>
         { article.articleId
           ? (
-              <Grid container>
+              <Grid container justify='center'>
                   <Grid item xs={12} md={6} align="center">
                       <img src={article.images[0] ? article.images[0].imageLink : 'https://i.stack.imgur.com/GNhxO.png'} className={classes.image}></img>
                   </Grid>

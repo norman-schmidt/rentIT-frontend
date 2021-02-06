@@ -55,7 +55,7 @@ function Home (props) {
       <Typography variant="subtitle1" align="center" paragraph>Your place to rent IT-Devices with comfort.</Typography>
       {!isLoggedIn
         ? <div>
-          <Grid className={classes.login} container justify='space-around'>
+          <Grid className={classes.login} spacing={2} container justify='space-around'>
             <Grid item xs={12} sm={4}>
               <Button fullWidth variant="outlined" color='primary' onClick={() => props.history.push('/login')}>
                 Login
