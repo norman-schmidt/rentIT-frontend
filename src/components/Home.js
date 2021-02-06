@@ -51,8 +51,8 @@ function Home (props) {
 
   return (
     <Container className={classes.root} align="center">
-      <Typography variant="h4" align="center" paragraph>Willkommen bei RentIT</Typography>
-      <Typography variant="subtitle1" align="center" paragraph>Ihr Ort um IT-Geräte bequem auszuleihen.</Typography>
+      <Typography variant="h4" align="center" paragraph>Welcome to RentIT</Typography>
+      <Typography variant="subtitle1" align="center" paragraph>Your place to rent IT-Devices with comfort.</Typography>
       {!isLoggedIn
         ? <div>
           <Grid className={classes.login} container justify='space-around'>
