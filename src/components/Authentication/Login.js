@@ -1,15 +1,13 @@
 /* eslint-disable react/prop-types */
 import { React, useEffect, useState } from 'react'
-
 import { login } from '../../actions/auth'
-import { useDispatch, useSelector } from 'react-redux'
+import { CLEAR_MESSAGE } from '../../actions/types'
 
 import { Link, Redirect } from 'react-router-dom'
 import { Avatar, Button, Container, CssBaseline, makeStyles, TextField, Typography } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
-
 import { isEmail } from 'validator'
-import { CLEAR_MESSAGE } from '../../actions/types'
+import { useDispatch, useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   paper: {

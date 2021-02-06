@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
+import { logout } from '../actions/auth'
+import AuthService from '../services/auth-service'
 
 import { makeStyles, fade } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -12,13 +14,9 @@ import SearchIcon from '@material-ui/icons/Search'
 import { AccountCircle } from '@material-ui/icons'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-
+import { Avatar, ListItemIcon, Menu, MenuItem } from '@material-ui/core'
 import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { logout } from '../actions/auth'
-import AuthService from '../services/auth-service'
-import { Avatar, ListItemIcon, Menu, MenuItem } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   header: {

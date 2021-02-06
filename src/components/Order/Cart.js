@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import ArticleListItem from '../Articles/ArticleListItem'
-import { useDispatch, useSelector } from 'react-redux'
+import { CHANGE_RENTALDATE, CHANGE_QUANTITY, CHANGE_RETURNDATE, CLEAR_CART, DELETE_ITEM } from '../../actions/types'
+import { API_ENDPOINT } from '../../config'
+import authHeader from '../../services/auth-header'
+
 import { Typography, Button, makeStyles, Grid, MenuItem, Select, InputLabel, FormControl, Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton } from '@material-ui/core'
 import Skeleton from '@material-ui/lab/Skeleton'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import DateFnsUtils from '@date-io/date-fns'
-import differenceInDays from 'date-fns/differenceInDays'
-import sub from 'date-fns/sub'
-import add from 'date-fns/add'
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
+import differenceInDays from 'date-fns/differenceInDays'
+import sub from 'date-fns/sub'
+import add from 'date-fns/add'
 import Axios from 'axios'
-import { API_ENDPOINT } from '../../config'
-import { CHANGE_RENTALDATE, CHANGE_QUANTITY, CHANGE_RETURNDATE, CLEAR_CART, DELETE_ITEM } from '../../actions/types'
-import authHeader from '../../services/auth-header'
 import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   checkoutButton: {

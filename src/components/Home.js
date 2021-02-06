@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import './Home.css'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
-import ImageGallery from 'react-image-gallery'
-import './Home.css'
 import { Button, Container, Grid } from '@material-ui/core'
+import ImageGallery from 'react-image-gallery'
 import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles({

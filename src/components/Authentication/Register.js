@@ -1,4 +1,8 @@
 /* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react'
+import { register } from '../../actions/auth'
+import { CLEAR_MESSAGE } from '../../actions/types'
+
 import {
   Avatar,
   Button,
@@ -10,14 +14,9 @@ import {
   Typography
 } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
-
+import { useDispatch, useSelector } from 'react-redux'
 import { isEmail } from 'validator'
-
-import { register } from '../../actions/auth'
-import { CLEAR_MESSAGE } from '../../actions/types'
 
 const useStyles = makeStyles((theme) => ({
   paper: {

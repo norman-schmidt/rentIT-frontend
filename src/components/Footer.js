@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+
 import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -7,11 +8,10 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 import HomeIcon from '@material-ui/icons/Home'
 import ListIcon from '@material-ui/icons/List'
 import DashboardIcon from '@material-ui/icons/Dashboard'
-
-import { useHistory, useLocation } from 'react-router-dom'
 import { ShoppingCart } from '@material-ui/icons'
-import { useSelector } from 'react-redux'
 import { Badge } from '@material-ui/core'
+import { useHistory, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
