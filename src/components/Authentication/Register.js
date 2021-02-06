@@ -111,7 +111,7 @@ export default function SignUp (props) {
             <Grid item xs={12} sm={6}>
               <TextField
                 error = {firstNameError}
-                helperText = {firstNameError ? 'The first name must have 3 - 20 characters' : ''}
+                helperText = {firstNameError ? 'The first name must have 2 - 30 characters' : ''}
                 autoComplete='fname'
                 name='firstName'
                 variant='outlined'
@@ -119,7 +119,7 @@ export default function SignUp (props) {
                 required
                 fullWidth
                 onChange={(e) => setFirstName(e.target.value)}
-                onBlur={(e) => { setFirstNameError(e.target.value.length < 3 || e.target.value.length > 20) }}
+                onBlur={(e) => { setFirstNameError(e.target.value.length < 2 || e.target.value.length > 30) }}
                 onFocus={(e) => { setFirstNameError(false) }}
                 id='firstName'
                 label='First Name'
@@ -129,13 +129,13 @@ export default function SignUp (props) {
             <Grid item xs={12} sm={6}>
               <TextField
                 error = {lastNameError}
-                helperText = {lastNameError ? 'The last name must have 3 - 20 characters' : ''}
+                helperText = {lastNameError ? 'The last name must have 2 - 30 characters' : ''}
                 variant='outlined'
                 margin='normal'
                 required
                 fullWidth
                 onChange={(e) => setLastName(e.target.value)}
-                onBlur={(e) => { setLastNameError(e.target.value.length < 3 || e.target.value.length > 20) }}
+                onBlur={(e) => { setLastNameError(e.target.value.length < 2 || e.target.value.length > 30) }}
                 onFocus={() => { setLastNameError(false) }}
                 id='lastName'
                 label='Last Name'
@@ -146,13 +146,13 @@ export default function SignUp (props) {
             <Grid item xs={7}>
               <TextField
                 error = {streetError}
-                helperText = {streetError ? 'The street must have 3 - 20 characters' : ''}
+                helperText = {streetError ? 'The street must have 3 - 40 characters' : ''}
                 variant='outlined'
                 margin='normal'
                 required
                 fullWidth
                 onChange={(e) => setStreet(e.target.value)}
-                onBlur={(e) => { setStreetError(e.target.value.length < 3 || e.target.value.length > 20) }}
+                onBlur={(e) => { setStreetError(e.target.value.length < 3 || e.target.value.length > 40) }}
                 onFocus={() => { setStreetError(false) }}
                 id='street'
                 label='Street'
