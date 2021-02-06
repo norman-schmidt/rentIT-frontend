@@ -13,7 +13,6 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import differenceInDays from 'date-fns/differenceInDays'
 import sub from 'date-fns/sub'
 import add from 'date-fns/add'
 import Axios from 'axios'
@@ -60,14 +59,15 @@ const Cart = () => {
   const [backDropOpen, setbackDropOpen] = useState(false)
   const [articles, setArticles] = useState([])
   const [total, setTotal] = useState(0)
+  const dispatch = useDispatch()
 
   let cart = {}
   const calculateTotal = () => {
     if (cart && cart.items && articles.length > 0) {
       let sum = 0
       cart.items.forEach((item, index) => {
-        // console.log(articles[index].price + ' * ' + item.quantity + ' * ' + new Date(item.rentalDate) + ' - ' + item.returnDate + ' = ' + differenceInDays(new Date(item.returnDate), new Date(item.rentalDate)))
-        sum += articles[index].price * item.quantity * (differenceInDays(new Date(item.returnDate), new Date(item.rentalDate)) + 1)
+        // console.log(articles[index].price + ' * ' + item.quantity + ' * (' + new Date(item.returnDate).getDate() + ' - ' + new Date(item.rentalDate).getDate() + ' = ' + (new Date(item.returnDate).getDate() - new Date(item.rentalDate).getDate()) + ')')
+        sum += articles[index].price * item.quantity * (new Date(item.returnDate).getDate() - new Date(item.rentalDate).getDate())
       })
       setTotal(sum)
     }
@@ -76,8 +76,6 @@ const Cart = () => {
     calculateTotal()
     return state.cart
   })
-
-  const dispatch = useDispatch()
 
   useEffect(() => {
     Axios({
@@ -162,7 +160,7 @@ const Cart = () => {
                       <Typography variant='h5'>Total: {total}€</Typography>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                      <Button className={classes.checkoutButton} onClick={() => setOpen(true)} variant="contained" color="primary"endIcon={<ArrowForwardIosIcon />}>Proceed to Checkout</Button>
+                      <Button disabled={backDropOpen} className={classes.checkoutButton} onClick={() => setOpen(true)} variant="contained" color="primary"endIcon={<ArrowForwardIosIcon />}>Proceed to Checkout</Button>
                       {isLoggedIn
                         ? <Dialog
                             fullWidth={true}
@@ -213,7 +211,7 @@ const Cart = () => {
                             {article && cart.items[index]
                               ? <div className={classes.article}>
                                   <div className={classes.deleteButtonContainer}>
-                                    <IconButton className={classes.deleteButton} onClick={() => { handleDelete(article.id) }} color='secondary'><DeleteForeverIcon /></IconButton>
+                                    <IconButton disabled={backDropOpen} className={classes.deleteButton} onClick={() => { handleDelete(article.id) }} color='secondary'><DeleteForeverIcon /></IconButton>
                                   </div>
                                   <ArticleListItem article={article}></ArticleListItem>
                                   <Paper square variant='outlined' className={classes.dateAndQuantity}>
@@ -254,7 +252,7 @@ const Cart = () => {
                                         </MuiPickersUtilsProvider>
                                       </Grid>
                                       <Grid item xs={2} sm={2} align='center'>
-                                        <Typography variant="body1">{(differenceInDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate)) + 1) > 0 ? (differenceInDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate)) + 1) + ' Day(s)' : ''}</Typography>
+                                        <Typography variant="body1">{(new Date(cart.items[index].returnDate).getDate() - new Date(cart.items[index].rentalDate).getDate()) > 0 ? (new Date(cart.items[index].returnDate).getDate() - new Date(cart.items[index].rentalDate).getDate()) + ' Day(s)' : ''}</Typography>
                                       </Grid>
                                       <Grid item xs={5} sm={3} align='center'>
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -275,7 +273,7 @@ const Cart = () => {
                                         </MuiPickersUtilsProvider>
                                       </Grid>
                                       <Grid item xs={12} sm={2} align='center'>
-                                        <Typography variant="body1">{(differenceInDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate)) + 1) > 0 ? '= ' + (articles[index].price * cart.items[index].quantity * (differenceInDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate)) + 1)) + '€' : ''}</Typography>
+                                        <Typography variant="body1">{(new Date(cart.items[index].returnDate).getDate() - new Date(cart.items[index].rentalDate).getDate()) > 0 ? '= ' + (articles[index].price * cart.items[index].quantity * (new Date(cart.items[index].returnDate).getDate() - new Date(cart.items[index].rentalDate).getDate())) + '€' : ''}</Typography>
                                       </Grid>
                                     </Grid>
                                   </Paper>
