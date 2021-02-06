@@ -4,7 +4,7 @@ import axios from 'axios'
 import { API_ENDPOINT } from '../../config'
 
 import { List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core'
-import SmartphoneIcon from '@material-ui/icons/Smartphone'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +33,7 @@ function Categories (props) {
                   return (
                     <ListItem button key={i} onClick={() => props.history.push('/categories/' + categorie)}>
                       <ListItemIcon>
-                        <SmartphoneIcon />
+                        <ArrowForwardIosIcon />
                       </ListItemIcon>
                       <ListItemText primary={categorie} />
                     </ListItem>
