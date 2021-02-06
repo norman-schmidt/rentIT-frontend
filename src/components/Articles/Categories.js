@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { API_ENDPOINT } from '../../config'
 
-import { List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core'
+import { Container, List, ListItem, ListItemIcon, ListItemText, makeStyles } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import Skeleton from '@material-ui/lab/Skeleton'
 
@@ -25,20 +25,20 @@ function Categories (props) {
   }, [])
   const classes = useStyles()
   return (
-    <div>
-      {categories.length
+    <Container>
+      {Object.keys(categories).length
         ? (
             <List>
-                {categories.map((categorie, i) => {
-                  return (
-                    <ListItem button key={i} onClick={() => props.history.push('/categories/' + categorie)}>
-                      <ListItemIcon>
-                        <ArrowForwardIosIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={categorie} />
-                    </ListItem>
-                  )
-                })}
+              {Object.keys(categories).map((key) => {
+                return (
+                  <ListItem button key={key} onClick={() => props.history.push('/categories/' + key)}>
+                    <ListItemIcon>
+                      <ArrowForwardIosIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={key} secondary={categories[key]}/>
+                  </ListItem>
+                )
+              })}
             </List>
           )
         : (
@@ -51,7 +51,7 @@ function Categories (props) {
             </div>
           )
         }
-    </div>
+    </Container>
   )
 }
 
