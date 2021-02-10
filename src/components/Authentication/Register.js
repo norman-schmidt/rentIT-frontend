@@ -110,7 +110,7 @@ export default function SignUp (props) {
             <Grid item xs={12} sm={6}>
               <TextField
                 error = {firstNameError}
-                helperText = {firstNameError ? 'The first name must have 2 - 30 characters' : ''}
+                helperText = {firstNameError ? 'The first name must have 3 - 30 characters' : ''}
                 autoComplete='fname'
                 name='firstName'
                 variant='outlined'
@@ -118,7 +118,7 @@ export default function SignUp (props) {
                 required
                 fullWidth
                 onChange={(e) => setFirstName(e.target.value)}
-                onBlur={(e) => { setFirstNameError(e.target.value.length < 2 || e.target.value.length > 30) }}
+                onBlur={(e) => { setFirstNameError(e.target.value.length < 3 || e.target.value.length > 30) }}
                 onFocus={(e) => { setFirstNameError(false) }}
                 id='firstName'
                 label='First Name'
