@@ -15,6 +15,7 @@ import {
 import DateFnsUtils from '@date-io/date-fns'
 import sub from 'date-fns/sub'
 import add from 'date-fns/add'
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
 import Axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -67,7 +68,7 @@ const Cart = () => {
       let sum = 0
       cart.items.forEach((item, index) => {
         // console.log(articles[index].price + ' * ' + item.quantity + ' * (' + new Date(item.returnDate).getDate() + ' - ' + new Date(item.rentalDate).getDate() + ' = ' + (new Date(item.returnDate).getDate() - new Date(item.rentalDate).getDate()) + ')')
-        sum += articles[index].price * item.quantity * (new Date(item.returnDate).getDate() - new Date(item.rentalDate).getDate())
+        sum += articles[index].price * item.quantity * differenceInCalendarDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate))
       })
       setTotal(sum)
     }
@@ -252,7 +253,7 @@ const Cart = () => {
                                         </MuiPickersUtilsProvider>
                                       </Grid>
                                       <Grid item xs={2} sm={2} align='center'>
-                                        <Typography variant="body1">{(new Date(cart.items[index].returnDate).getDate() - new Date(cart.items[index].rentalDate).getDate()) > 0 ? (new Date(cart.items[index].returnDate).getDate() - new Date(cart.items[index].rentalDate).getDate()) + ' Day(s)' : ''}</Typography>
+                                        <Typography variant="body1">{differenceInCalendarDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate)) > 0 ? differenceInCalendarDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate)) + ' Day(s)' : ''}</Typography>
                                       </Grid>
                                       <Grid item xs={5} sm={3} align='center'>
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -273,7 +274,7 @@ const Cart = () => {
                                         </MuiPickersUtilsProvider>
                                       </Grid>
                                       <Grid item xs={12} sm={2} align='center'>
-                                        <Typography variant="body1">{(new Date(cart.items[index].returnDate).getDate() - new Date(cart.items[index].rentalDate).getDate()) > 0 ? '= ' + (articles[index].price * cart.items[index].quantity * (new Date(cart.items[index].returnDate).getDate() - new Date(cart.items[index].rentalDate).getDate())) + '€' : ''}</Typography>
+                                        <Typography variant="body1">{differenceInCalendarDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate)) > 0 ? '= ' + (articles[index].price * cart.items[index].quantity * differenceInCalendarDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate))) + '€' : ''}</Typography>
                                       </Grid>
                                     </Grid>
                                   </Paper>
