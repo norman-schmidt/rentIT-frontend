@@ -158,7 +158,7 @@ const Cart = () => {
               ? <div>
                   <Grid container justify="center" alignItems="center">
                     <Grid item xs={12} md={6} align="center">
-                      <Typography variant='h5'>Total: {total}€</Typography>
+                      <Typography variant='h5'>Total: {total.toFixed(2)}€</Typography>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Button disabled={backDropOpen} className={classes.checkoutButton} onClick={() => setOpen(true)} variant="contained" color="primary"endIcon={<ArrowForwardIosIcon />}>Proceed to Checkout</Button>
@@ -274,7 +274,7 @@ const Cart = () => {
                                         </MuiPickersUtilsProvider>
                                       </Grid>
                                       <Grid item xs={12} sm={2} align='center'>
-                                        <Typography variant="body1">{differenceInCalendarDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate)) > 0 ? '= ' + (articles[index].price * cart.items[index].quantity * differenceInCalendarDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate))) + '€' : ''}</Typography>
+                                        <Typography variant="body1">{differenceInCalendarDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate)) > 0 ? '= ' + (articles[index].price * cart.items[index].quantity * differenceInCalendarDays(new Date(cart.items[index].returnDate), new Date(cart.items[index].rentalDate))).toFixed(2) + '€' : ''}</Typography>
                                       </Grid>
                                     </Grid>
                                   </Paper>
