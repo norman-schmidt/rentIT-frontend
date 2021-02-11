@@ -5,6 +5,8 @@ import AuthService from '../../services/auth-service'
 import authHeader from '../../services/auth-header'
 
 import { Backdrop, Button, CircularProgress, Divider, Grid, makeStyles, Typography } from '@material-ui/core'
+import isBefore from 'date-fns/isBefore'
+import isToday from 'date-fns/isToday'
 import { useSelector } from 'react-redux'
 import Axios from 'axios'
 
@@ -25,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   },
   tableRow: {
     padding: 10
+  },
+  toLate: {
+    color: 'red'
   },
   image: {
     width: 'auto',
@@ -117,10 +122,13 @@ function Dashboard () {
                               <Typography variant='body2' >{article.quantity}x</Typography>
                             </Grid>
                             <Grid item xs={4} md={2}>
-                              <Typography variant='body2' >{article.rent_date.substr(0, 10).replaceAll('-', '.')}</Typography>
+                              <Typography variant='body2' >{(new Date(article.rent_date)).toLocaleDateString('de-DE')}</Typography>
                             </Grid>
                             <Grid item xs={4} md={1}>
-                              <Typography variant='body2' >{article.return_date ? article.return_date.substr(0, 10).replaceAll('-', '.') : '-'}</Typography>
+                              {isBefore(new Date(article.return_date), new Date()) || isToday(new Date(article.return_date))
+                                ? <Typography className={classes.toLate} variant='body2' >{article.return_date ? (new Date(article.return_date)).toLocaleDateString('de-DE') : '-'}</Typography>
+                                : <Typography variant='body2' >{article.return_date ? (new Date(article.return_date)).toLocaleDateString('de-DE') : '-'}</Typography>
+                              }
                             </Grid>
                             <Grid item xs={5} md={2}>
                               <Button disabled variant="contained" color='primary'>
