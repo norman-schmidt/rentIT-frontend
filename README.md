@@ -1,9 +1,9 @@
 # RentIT Frontend
 
-Frontend for https://rentit24.tech/#/
-
-  
-
+Frontend for https://rentit24.tech/#/\
+\
+\
+´\
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
