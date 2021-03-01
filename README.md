@@ -2,6 +2,7 @@
 
 Frontend for https://rentit24.tech/#/ \
 \
+Backend Repository: https://github.com/norman-schmidt/rentIT-backend \
 \
 \
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
