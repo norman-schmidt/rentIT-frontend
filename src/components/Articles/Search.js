@@ -53,7 +53,7 @@ function Search (props) {
   useEffect(() => {
     axios.get(API_ENDPOINT + 'categories/name/')
       .then(res => {
-        setCategoryies(res.data)
+        setCategoryies(Object.keys(res.data))
       })
   }, [])
 
